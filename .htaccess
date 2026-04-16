@@ -1,0 +1,26 @@
+RewriteEngine On
+RewriteBase /AIUB_App/
+
+# Prevent directory listing
+Options -Indexes
+
+# Protect config directory
+RewriteRule ^config/ - [F,L]
+
+# Protect includes directory
+RewriteRule ^includes/ - [F,L]
+
+# Protect seed.php (uncomment after running it)
+# RewriteRule ^seed\.php$ - [F,L]
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Block access to hidden files
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
