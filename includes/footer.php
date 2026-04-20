@@ -20,8 +20,8 @@
                 <h5><?= SITE_NAME ?></h5>
                 <p><?= SITE_TAGLINE ?></p>
                 <div class="footer-social mt-3">
-                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/kheora.alumni.association" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://youtu.be/sia8WlMQyY4?si=Ui5dtidK4-7ToJdU" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
                     <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                 </div>
@@ -46,15 +46,15 @@
                 <div class="footer-contact">
                     <div class="contact-item">
                         <i class="bi bi-geo-alt-fill"></i>
-                        <p>AIUB Campus, 408/1, Kuratoli,<br>Khilkhet, Dhaka 1229</p>
+                        <p>Kheora, Kasba, Brahmanbaria-3460</p>
                     </div>
                     <div class="contact-item">
                         <i class="bi bi-envelope-fill"></i>
-                        <p>info@aiub.org</p>
+                        <p>anandamoyeean@gmail.com</p>
                     </div>
                     <div class="contact-item">
                         <i class="bi bi-telephone-fill"></i>
-                        <p>+880 1XXX-XXXXXX</p>
+                        <p>+880 1611 759094</p>
                     </div>
                 </div>
             </div>

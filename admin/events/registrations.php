@@ -16,7 +16,7 @@ if (!$event) {
 }
 
 $filter = $_GET['filter'] ?? 'all';
-$sql = "SELECT er.*, u.name, u.email, u.student_id, u.batch, u.department, u.profile_image
+$sql = "SELECT er.*, u.name, u.email, u.batch, u.profile_image
         FROM event_registrations er
         JOIN users u ON er.user_id = u.id
         WHERE er.event_id = ?";
@@ -98,7 +98,6 @@ $counts = $countStmt->fetch();
                             <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Student ID</th>
                             <th>Transaction ID</th>
                             <th>Payment Proof</th>
                             <th>Status</th>
@@ -112,7 +111,6 @@ $counts = $countStmt->fetch();
                             <td><?= $i + 1 ?></td>
                             <td><strong><?= sanitize($reg['name']) ?></strong></td>
                             <td><?= sanitize($reg['email']) ?></td>
-                            <td><?= sanitize($reg['student_id'] ?? '-') ?></td>
                             <td><?= sanitize($reg['transaction_id'] ?? '-') ?></td>
                             <td>
                                 <?php if ($reg['payment_proof']): ?>
@@ -163,7 +161,7 @@ $counts = $countStmt->fetch();
                         </tr>
                         <?php endforeach; ?>
                         <?php if (empty($registrations)): ?>
-                        <tr><td colspan="9" class="text-center text-muted py-4">No registrations found</td></tr>
+                        <tr><td colspan="8" class="text-center text-muted py-4">No registrations found</td></tr>
                         <?php endif; ?>
                     </tbody>
                 </table>

@@ -66,8 +66,6 @@ $counts = [
                             <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Student ID</th>
-                            <th>Department</th>
                             <th>Batch</th>
                             <th>Status</th>
                             <th>Joined</th>
@@ -80,8 +78,6 @@ $counts = [
                             <td><?= $i + 1 ?></td>
                             <td><strong><?= sanitize($member['name']) ?></strong></td>
                             <td><?= sanitize($member['email']) ?></td>
-                            <td><?= sanitize($member['student_id'] ?? '-') ?></td>
-                            <td><?= sanitize($member['department'] ?? '-') ?></td>
                             <td><?= sanitize($member['batch'] ?? '-') ?></td>
                             <td><span class="badge badge-<?= $member['status'] ?>"><?= ucfirst($member['status']) ?></span></td>
                             <td><small><?= formatDate($member['created_at']) ?></small></td>
@@ -124,7 +120,7 @@ $counts = [
                         </tr>
                         <?php endforeach; ?>
                         <?php if (empty($members)): ?>
-                        <tr><td colspan="9" class="text-center text-muted py-4">No members found</td></tr>
+                        <tr><td colspan="7" class="text-center text-muted py-4">No members found</td></tr>
                         <?php endif; ?>
                     </tbody>
                 </table>

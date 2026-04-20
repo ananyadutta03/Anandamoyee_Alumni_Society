@@ -5,8 +5,8 @@ $pdo = getDBConnection();
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="container">
-        <h1>Welcome to <span class="highlight"><?= SITE_NAME ?></span></h1>
-        <p><?= SITE_TAGLINE ?></p>
+        <h1>Welcome to <br><span class="highlight">Kheora Anandamoyee High School Alumni Association</span></h1>
+        <p>Honoring our roots, empowering future generations</p>
         <a href="<?= SITE_URL ?>/pages/about.php" class="btn btn-primary-custom btn-hero">
             Learn More <i class="bi bi-arrow-right ms-2"></i>
         </a>
@@ -19,14 +19,14 @@ $pdo = getDBConnection();
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
                 <div class="about-img">
-                    <img src="<?= SITE_URL ?>/assets/images/about-preview.jpg" alt="About AIUB Alumni Society"
+                    <img src="<?= SITE_URL ?>/assets/images/about-preview.jpg" alt="About Anandamoyee Alumni Society"
                          onerror="this.outerHTML='<div class=\'placeholder-img rounded\' style=\'height:400px\'><i class=\'bi bi-building\'></i></div>'">
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="about-content">
-                    <h3>About AIUB Society</h3>
-                    <p>AIUB Society is a non-political and non-profit making Society </p>
+                    <h3>About Anandamoyee Alumni Association</h3>
+                    <p>Honoring our roots, empowering future generations.</p>
                     <p></p>
 
                     <!-- <div class="about-features">
@@ -34,7 +34,7 @@ $pdo = getDBConnection();
                             <i class="bi bi-people-fill"></i>
                             <div>
                                 <strong>Networking</strong>
-                                <p class="mb-0">Connect with fellow AIUB alumni across industries and batches.</p>
+                                <p class="mb-0">Connect with fellow Anandamoyee alumni across industries and batches.</p>
                             </div>
                         </div>
                         <div class="feature-item">

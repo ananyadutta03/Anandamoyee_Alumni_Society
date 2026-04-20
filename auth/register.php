@@ -15,9 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email      = trim($_POST['email'] ?? '');
     $password   = $_POST['password'] ?? '';
     $confirm    = $_POST['confirm_password'] ?? '';
-    $studentId  = trim($_POST['student_id'] ?? '');
     $batch      = trim($_POST['batch'] ?? '');
-    $department = trim($_POST['department'] ?? '');
     $phone      = trim($_POST['phone'] ?? '');
     $errors     = [];
 
@@ -25,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Valid email is required.';
     if (strlen($password) < 8) $errors[] = 'Password must be at least 8 characters.';
     if ($password !== $confirm) $errors[] = 'Passwords do not match.';
+    if (empty($batch))   $errors[] = 'Batch is required.';
+    if (empty($phone))   $errors[] = 'Phone number is required.';
 
     if (empty($errors)) {
         $pdo = getDBConnection();
@@ -39,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         $hash = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, student_id, batch, department, phone) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$name, $email, $hash, $studentId ?: null, $batch ?: null, $department ?: null, $phone ?: null]);
+        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, batch, phone) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $email, $hash, $batch, $phone]);
 
         setFlash('success', 'Registration successful! Your account is pending admin approval.');
         redirect(SITE_URL . '/auth/login.php');
@@ -110,38 +110,14 @@ $pageTitle = 'Register - ' . SITE_NAME;
                 </div>
             </div>
 
-            <hr class="my-3">
-            <p class="text-muted small mb-3">AIUB Information (Optional)</p>
-
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
-                    <label class="form-label">Student ID</label>
-                    <input type="text" name="student_id" class="form-control" placeholder="e.g., 18-12345-1" value="<?= sanitize($_POST['student_id'] ?? '') ?>">
+                    <label class="form-label">Batch *</label>
+                    <input type="text" name="batch" class="form-control" required placeholder="e.g., 45th" value="<?= sanitize($_POST['batch'] ?? '') ?>">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Batch</label>
-                    <input type="text" name="batch" class="form-control" placeholder="e.g., 45th" value="<?= sanitize($_POST['batch'] ?? '') ?>">
-                </div>
-            </div>
-
-            <div class="row g-3 mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Department</label>
-                    <select name="department" class="form-select">
-                        <option value="">Select Department</option>
-                        <option value="CSE" <?= ($_POST['department'] ?? '') === 'CSE' ? 'selected' : '' ?>>Computer Science & Engineering</option>
-                        <option value="EEE" <?= ($_POST['department'] ?? '') === 'EEE' ? 'selected' : '' ?>>Electrical & Electronic Engineering</option>
-                        <option value="BBA" <?= ($_POST['department'] ?? '') === 'BBA' ? 'selected' : '' ?>>Business Administration</option>
-                        <option value="Economics" <?= ($_POST['department'] ?? '') === 'Economics' ? 'selected' : '' ?>>Economics</option>
-                        <option value="English" <?= ($_POST['department'] ?? '') === 'English' ? 'selected' : '' ?>>English</option>
-                        <option value="Law" <?= ($_POST['department'] ?? '') === 'Law' ? 'selected' : '' ?>>Law</option>
-                        <option value="Architecture" <?= ($_POST['department'] ?? '') === 'Architecture' ? 'selected' : '' ?>>Architecture</option>
-                        <option value="Pharmacy" <?= ($_POST['department'] ?? '') === 'Pharmacy' ? 'selected' : '' ?>>Pharmacy</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Phone</label>
-                    <input type="text" name="phone" class="form-control" placeholder="+880..." value="<?= sanitize($_POST['phone'] ?? '') ?>">
+                    <label class="form-label">Phone *</label>
+                    <input type="text" name="phone" class="form-control" required placeholder="+880..." value="<?= sanitize($_POST['phone'] ?? '') ?>">
                 </div>
             </div>
 

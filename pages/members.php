@@ -11,9 +11,8 @@ $pdo = getDBConnection();
 
 // Search filter
 $search = trim($_GET['search'] ?? '');
-$department = trim($_GET['department'] ?? '');
 
-$sql = "SELECT name, email, department, batch, profile_image, created_at FROM users WHERE status = 'approved' AND role = 'user'";
+$sql = "SELECT name, email, batch, profile_image, created_at FROM users WHERE status = 'approved' AND role = 'user'";
 $params = [];
 
 if ($search) {
@@ -21,19 +20,12 @@ if ($search) {
     $params[] = "%$search%";
     $params[] = "%$search%";
 }
-if ($department) {
-    $sql .= " AND department = ?";
-    $params[] = $department;
-}
 
 $sql .= " ORDER BY name ASC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $members = $stmt->fetchAll();
-
-// Get unique departments for filter
-$departments = $pdo->query("SELECT DISTINCT department FROM users WHERE status = 'approved' AND department IS NOT NULL AND department != '' ORDER BY department")->fetchAll(PDO::FETCH_COLUMN);
 
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
@@ -59,18 +51,9 @@ include __DIR__ . '/../includes/navbar.php';
         <div class="card card-custom mb-4">
             <div class="card-body p-4">
                 <form method="GET" class="row g-3 align-items-end">
-                    <div class="col-md-5">
+                    <div class="col-md-9">
                         <label class="form-label">Search</label>
                         <input type="text" name="search" class="form-control" placeholder="Search by name or email..." value="<?= sanitize($search) ?>">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Department</label>
-                        <select name="department" class="form-select">
-                            <option value="">All Departments</option>
-                            <?php foreach ($departments as $dept): ?>
-                                <option value="<?= sanitize($dept) ?>" <?= $department === $dept ? 'selected' : '' ?>><?= sanitize($dept) ?></option>
-                            <?php endforeach; ?>
-                        </select>
                     </div>
                     <div class="col-md-3">
                         <button type="submit" class="btn btn-primary-custom w-100">
@@ -102,9 +85,6 @@ include __DIR__ . '/../includes/navbar.php';
                 <?php endif; ?>
                 <div class="member-info">
                     <h6><?= sanitize($member['name']) ?></h6>
-                    <?php if ($member['department']): ?>
-                        <p><i class="bi bi-building me-1"></i><?= sanitize($member['department']) ?></p>
-                    <?php endif; ?>
                     <?php if ($member['batch']): ?>
                         <p><i class="bi bi-mortarboard me-1"></i>Batch: <?= sanitize($member['batch']) ?></p>
                     <?php endif; ?>

@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name     = trim($_POST['name'] ?? '');
     $email    = trim($_POST['email'] ?? '');
     $phone    = trim($_POST['phone'] ?? '');
+    $address  = trim($_POST['address'] ?? '');
     $bio      = trim($_POST['bio'] ?? '');
     $linkedin = trim($_POST['linkedin'] ?? '');
     $facebook = trim($_POST['facebook'] ?? '');
@@ -57,9 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $stmt = $pdo->prepare("UPDATE users SET name = ?, email = ?, phone = ?, bio = ?, linkedin = ?, facebook = ?, twitter = ?, profile_image = ? WHERE id = ?");
+        $stmt = $pdo->prepare("UPDATE users SET name = ?, email = ?, phone = ?, address = ?, bio = ?, linkedin = ?, facebook = ?, twitter = ?, profile_image = ? WHERE id = ?");
         $stmt->execute([
-            $name, $email, $phone ?: null, $bio ?: null,
+            $name, $email, $phone ?: null, $address ?: null, $bio ?: null,
             $linkedin ?: null, $facebook ?: null, $twitter ?: null,
             $profileImage, $_SESSION['user_id']
         ]);
@@ -134,20 +135,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <hr>
 
-                    <!-- Read-only AIUB Details -->
-                    <p class="text-muted small mb-3"><i class="bi bi-lock me-1"></i>AIUB Details (cannot be changed)</p>
+                    <!-- Read-only Anandamoyee Details -->
+                    <p class="text-muted small mb-3"><i class="bi bi-lock me-1"></i>Anandamoyee Details (cannot be changed)</p>
                     <div class="row g-3 mb-4">
-                        <div class="col-md-4">
-                            <label class="form-label">Student ID</label>
-                            <input type="text" class="form-control" value="<?= sanitize($user['student_id'] ?? 'N/A') ?>" disabled style="background:#e9ecef;">
-                        </div>
                         <div class="col-md-4">
                             <label class="form-label">Batch</label>
                             <input type="text" class="form-control" value="<?= sanitize($user['batch'] ?? 'N/A') ?>" disabled style="background:#e9ecef;">
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label">Department</label>
-                            <input type="text" class="form-control" value="<?= sanitize($user['department'] ?? 'N/A') ?>" disabled style="background:#e9ecef;">
                         </div>
                     </div>
 
@@ -167,9 +160,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Phone</label>
-                        <input type="text" name="phone" class="form-control" value="<?= sanitize($user['phone'] ?? '') ?>" placeholder="+880...">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Phone</label>
+                            <input type="text" name="phone" class="form-control" value="<?= sanitize($user['phone'] ?? '') ?>" placeholder="+880...">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Home Address</label>
+                            <input type="text" name="address" class="form-control" value="<?= sanitize($user['address'] ?? '') ?>" placeholder="Your home address...">
+                        </div>
                     </div>
 
                     <div class="mb-3">

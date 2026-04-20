@@ -6,7 +6,7 @@ include __DIR__ . '/../includes/admin_header.php';
 include __DIR__ . '/../includes/admin_sidebar.php';
 
 $id = intval($_GET['id'] ?? 0);
-$stmt = $pdo->prepare("SELECT er.*, u.name, u.email, u.student_id, u.batch, u.department, u.phone, u.profile_image, u.membership_plan, e.title as event_title, e.event_date, e.location, e.registration_fee, e.id as eid
+$stmt = $pdo->prepare("SELECT er.*, u.name, u.email, u.batch, u.phone, u.profile_image, u.membership_plan, e.title as event_title, e.event_date, e.location, e.registration_fee, e.id as eid
     FROM event_registrations er
     JOIN users u ON er.user_id = u.id
     JOIN events e ON er.event_id = e.id
@@ -100,7 +100,7 @@ if (!$reg) {
                     </div>
                     <h5 class="mb-1"><?= sanitize($reg['name']) ?></h5>
                     <p class="text-muted small mb-1"><?= sanitize($reg['email']) ?></p>
-                    <p class="text-muted small mb-2"><?= sanitize($reg['student_id'] ?? 'N/A') ?> &bull; <?= sanitize($reg['department'] ?? 'N/A') ?> &bull; Batch <?= sanitize($reg['batch'] ?? 'N/A') ?></p>
+                    <p class="text-muted small mb-2">Batch <?= sanitize($reg['batch'] ?? 'N/A') ?></p>
                     <?php if ($reg['phone']): ?>
                         <p class="text-muted small mb-0"><i class="bi bi-phone me-1"></i><?= sanitize($reg['phone']) ?></p>
                     <?php endif; ?>

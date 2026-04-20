@@ -160,15 +160,7 @@ include __DIR__ . '/../includes/navbar.php';
                             </div>
 
                             <div class="row g-3 mb-3">
-                                <div class="col-md-4">
-                                    <label class="form-label">Student ID</label>
-                                    <input type="text" class="form-control" value="<?= sanitize($user['student_id'] ?? 'N/A') ?>" disabled>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Department</label>
-                                    <input type="text" class="form-control" value="<?= sanitize($user['department'] ?? 'N/A') ?>" disabled>
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label class="form-label">Batch</label>
                                     <input type="text" class="form-control" value="<?= sanitize($user['batch'] ?? 'N/A') ?>" disabled>
                                 </div>

@@ -108,19 +108,11 @@ if (!$member) {
 
             <!-- Details -->
             <div class="col-lg-8">
-                <!-- Combined: AIUB Details + Personal Info -->
+                <!-- Combined: Anandamoyee Details + Personal Info -->
                 <div class="card card-custom mb-3">
                     <div class="card-body p-4">
-                        <h6 class="mb-3"><i class="bi bi-mortarboard-fill me-2" style="color:var(--color-primary);"></i>AIUB Details</h6>
+                        <h6 class="mb-3"><i class="bi bi-mortarboard-fill me-2" style="color:var(--color-primary);"></i>Anandamoyee Details</h6>
                         <div class="row g-2 mb-3">
-                            <div class="col-md-4">
-                                <label class="text-muted small d-block">Student ID</label>
-                                <strong><?= sanitize($member['student_id'] ?? 'N/A') ?></strong>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="text-muted small d-block">Department</label>
-                                <strong><?= sanitize($member['department'] ?? 'N/A') ?></strong>
-                            </div>
                             <div class="col-md-4">
                                 <label class="text-muted small d-block">Batch</label>
                                 <strong><?= sanitize($member['batch'] ?? 'N/A') ?></strong>
@@ -142,6 +134,10 @@ if (!$member) {
                             <div class="col-md-6">
                                 <label class="text-muted small d-block">Phone</label>
                                 <strong><?= sanitize($member['phone'] ?? 'N/A') ?></strong>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-muted small d-block">Home Address</label>
+                                <strong><?= sanitize($member['address'] ?? 'N/A') ?></strong>
                             </div>
                             <div class="col-md-6">
                                 <label class="text-muted small d-block">Registered</label>

@@ -30,7 +30,7 @@ include __DIR__ . '/../includes/navbar.php';
     <div class="container">
         <div class="section-title">
             <h2>Our Leadership Team</h2>
-            <p>Meet the dedicated members leading AIUB Society</p>
+            <p>Meet the dedicated members leading Anandamoyee Alumni Association</p>
         </div>
 
         <?php if (empty($members)): ?>

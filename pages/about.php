@@ -27,14 +27,14 @@ include __DIR__ . '/../includes/navbar.php';
         <div class="row g-5">
             <div class="col-lg-6">
                 <div class="about-img" style="height: 100%; min-height: 400px;">
-                    <img src="<?= SITE_URL ?>/assets/images/about-full.jpg" alt="About AIUB Alumni Society" style="height: 100%; object-fit: cover;"
+                    <img src="<?= SITE_URL ?>/assets/images/about-full.jpg" alt="About Anandamoyee Alumni Society" style="height: 100%; object-fit: cover;"
                          onerror="this.outerHTML='<div class=\'placeholder-img rounded\' style=\'height:100%;min-height:400px\'><i class=\'bi bi-building\'></i></div>'">
                 </div>
             </div>
             <div class="col-lg-6">
-                <h2 style="font-size: 2rem; margin-bottom: 20px;">AIUB Society </h2>
+                <h2 style="font-size: 2rem; margin-bottom: 20px;">Anandamoyee Alumni Association</h2>
 
-                <p class="text-muted">AIUB Society is a non-political and non-profit making  Society. </p>
+                <p class="text-muted">Kheora Anandamoyee High School Alumni Association is a network of former students committed to staying connected with each other and supporting the growth and development of their alma mater. The association works to foster alumni engagement, support students, and contribute to the long-term progress of the school and community.</p>
 
             </div>
         </div>
@@ -52,7 +52,7 @@ include __DIR__ . '/../includes/navbar.php';
                             <i class="bi bi-bullseye" style="font-size: 3rem; color: var(--color-primary);"></i>
                         </div>
                         <h4 class="text-center mb-3">Our Mission</h4>
-                        <p class="text-muted">To ....... </p>
+                        <p class="text-muted">To The mission of the Kheora Anandamoyee High School Alumni Association is to foster a lifelong connection among former students, strengthen the bond between alumni and the school, and contribute to the academic, cultural, and social development of the institution. The association aims to support current students through mentorship, scholarships, and resources while encouraging alumni to collaborate in initiatives that promote educational excellence, community service, and the continued growth of our beloved school. </p>
                         <ul class="list-unstyled mt-3">
                             <li class="mb-2"><i class="bi bi-check-circle-fill text-primary-custom me-2"></i> Our Focus......</li>
                         </ul>
@@ -66,7 +66,7 @@ include __DIR__ . '/../includes/navbar.php';
                             <i class="bi bi-eye" style="font-size: 3rem; color: var(--color-primary);"></i>
                         </div>
                         <h4 class="text-center mb-3">Our Vision</h4>
-                        <p class="text-muted">To be ......</p>
+                        <p class="text-muted">To build a strong and united community of alumni who remain connected to their roots, support the development of Kheora Anandamoyee High School, and contribute to the educational, social, and professional growth of its students and graduates. The association envisions empowering future generations through mentorship, collaboration, and resources while preserving the traditions, values, and legacy of our beloved institution.</p>
                         <ul class="list-unstyled mt-3">
                             <li class="mb-2"><i class="bi bi-star-fill text-primary-custom me-2"></i> Visions.....</li>
                         </ul>

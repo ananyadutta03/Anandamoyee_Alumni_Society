@@ -94,7 +94,7 @@ include __DIR__ . '/../includes/navbar.php';
                         <i class="bi bi-geo-alt-fill"></i>
                         <div>
                             <h6>Address</h6>
-                            <p>AIUB Campus, 408/1, Kuratoli,<br>Khilkhet, Dhaka 1229, Bangladesh</p>
+                            <p>Kheora, Kasba, Brahmanbaria-3460</p>
                         </div>
                     </div>
 
@@ -102,7 +102,7 @@ include __DIR__ . '/../includes/navbar.php';
                         <i class="bi bi-envelope-fill"></i>
                         <div>
                             <h6>Email</h6>
-                            <p>info@aiub.org</p>
+                            <p>anandamoyeean@gmail.com</p>
                         </div>
                     </div>
 
@@ -110,7 +110,7 @@ include __DIR__ . '/../includes/navbar.php';
                         <i class="bi bi-telephone-fill"></i>
                         <div>
                             <h6>Phone</h6>
-                            <p>+880 1XXX-XXXXXX</p>
+                            <p>+880 1611 759094</p>
                         </div>
                     </div>
 

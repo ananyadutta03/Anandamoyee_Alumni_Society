@@ -77,24 +77,6 @@ if (!$user) {
                     <!-- Info Cards Row -->
                     <div class="row g-3 mb-3">
                         <div class="col-sm-6">
-                            <div class="stat-card">
-                                <div class="stat-icon bg-primary"><i class="bi bi-mortarboard-fill"></i></div>
-                                <div class="stat-info">
-                                    <h3 style="font-size:1.1rem;"><?= sanitize($user['student_id'] ?? 'N/A') ?></h3>
-                                    <p>Student ID</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="stat-card" style="border-left-color:#17a2b8;">
-                                <div class="stat-icon bg-info"><i class="bi bi-building"></i></div>
-                                <div class="stat-info">
-                                    <h3 style="font-size:1.1rem;"><?= sanitize($user['department'] ?? 'N/A') ?></h3>
-                                    <p>Department</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
                             <div class="stat-card" style="border-left-color:#28a745;">
                                 <div class="stat-icon bg-success"><i class="bi bi-calendar3"></i></div>
                                 <div class="stat-info">

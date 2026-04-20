@@ -1,8 +1,8 @@
 <?php
 // Site-wide constants
-define('SITE_NAME', 'AIUB Society');
-define('SITE_TAGLINE', 'A non-political, non-profit making Society');
-define('SITE_URL', 'http://localhost/AIUB_App');
+define('SITE_NAME', 'Anandamoyee Alumni Association');
+define('SITE_TAGLINE', 'Honoring our roots, empowering future generations');
+define('SITE_URL', 'http://localhost/Anandamoyee_Website');
 define('BASE_PATH', dirname(__DIR__));
 
 // Color scheme (for reference in PHP-generated styles)

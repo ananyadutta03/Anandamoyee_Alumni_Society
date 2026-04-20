@@ -4,9 +4,9 @@
         <div class="d-flex justify-content-between align-items-center">
             <!-- Social Icons -->
             <div class="social-icons d-none d-md-block">
-                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.facebook.com/kheora.alumni.association" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://youtu.be/sia8WlMQyY4?si=Ui5dtidK4-7ToJdU" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
                 <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             </div>
 

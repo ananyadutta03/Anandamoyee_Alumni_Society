@@ -1,5 +1,5 @@
 /**
- * AIUB Alumni Society - Admin JavaScript
+ * Anandamoyee Society - Admin JavaScript
  */
 document.addEventListener('DOMContentLoaded', function () {
 

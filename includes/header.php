@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AIUB Alumni Society - A non-political, non-profit making and social service Society">
+    <meta name="description" content="Anandamoyee Alumni Association - Honoring our roots, empowering future generations">
     <title><?= isset($pageTitle) ? sanitize($pageTitle) : SITE_NAME ?></title>
 
     <!-- Google Fonts -->
