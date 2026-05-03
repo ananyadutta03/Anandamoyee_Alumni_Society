@@ -97,10 +97,15 @@ if (!$member) {
                     </div>
                     <h5 class="mb-1"><?= sanitize($member['name']) ?></h5>
                     <p class="text-muted small mb-2"><?= sanitize($member['email']) ?></p>
-                    <span class="badge <?= ($member['membership_plan'] ?? 'free') === 'premium' ? 'bg-warning text-dark' : 'bg-secondary' ?> mb-2">
-                        <i class="bi bi-star-fill me-1"></i><?= ucfirst($member['membership_plan'] ?? 'free') ?> Member
+                    <?php
+                        $vpBadge = ['general' => 'bg-secondary', 'executive' => 'bg-primary', 'lifetime' => 'bg-warning text-dark'];
+                        $vpLabel = ['general' => 'General Member', 'executive' => 'Executive Member', 'lifetime' => 'Lifetime Member'];
+                        $vp = $member['membership_plan'] ?? 'general';
+                    ?>
+                    <span class="badge <?= $vpBadge[$vp] ?? 'bg-secondary' ?> mb-2">
+                        <i class="bi bi-star-fill me-1"></i><?= $vpLabel[$vp] ?? ucfirst($vp) ?>
                     </span>
-                    <?php if (($member['membership_plan'] ?? 'free') === 'premium' && $member['plan_expires_at']): ?>
+                    <?php if ($vp === 'executive' && $member['plan_expires_at']): ?>
                         <p class="text-muted small mb-0">Expires: <?= formatDate($member['plan_expires_at']) ?></p>
                     <?php endif; ?>
                 </div>

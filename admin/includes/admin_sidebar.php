@@ -30,6 +30,15 @@
         <a href="<?= SITE_URL ?>/admin/members/create_admin.php" class="<?= ($adminPage ?? '') === 'create_admin' ? 'active' : '' ?>">
             <i class="bi bi-shield-plus"></i> Create Admin
         </a>
+        <a href="<?= SITE_URL ?>/admin/membership/index.php" class="<?= ($adminPage ?? '') === 'membership' ? 'active' : '' ?>">
+            <i class="bi bi-card-checklist"></i> Membership
+            <?php
+                $pendingPayments = $pdo->query("SELECT COUNT(*) FROM membership_payments WHERE status = 'pending'")->fetchColumn();
+                if ($pendingPayments > 0):
+            ?>
+                <span class="badge bg-danger"><?= $pendingPayments ?></span>
+            <?php endif; ?>
+        </a>
 
         <div class="nav-label">Communication</div>
         <a href="<?= SITE_URL ?>/admin/messages/index.php" class="<?= ($adminPage ?? '') === 'messages' ? 'active' : '' ?>">

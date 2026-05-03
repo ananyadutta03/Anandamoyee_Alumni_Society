@@ -11,9 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect(SITE_URL . '/admin/committee/create.php');
     }
 
-    $name        = trim($_POST['name'] ?? '');
-    $designation = trim($_POST['designation'] ?? '');
-    $bio         = trim($_POST['bio'] ?? '');
+    $name           = trim($_POST['name'] ?? '');
+    $designation    = trim($_POST['designation'] ?? '');
+    $committeeType  = trim($_POST['committee_type'] ?? 'executive_member');
+    $bio            = trim($_POST['bio'] ?? '');
     $email       = trim($_POST['email'] ?? '');
     $phone       = trim($_POST['phone'] ?? '');
     $linkedin    = trim($_POST['linkedin'] ?? '');
@@ -31,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $stmt = $pdo->prepare("INSERT INTO executive_committee (name, designation, image, bio, email, phone, linkedin, sort_order, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$name, $designation, $image, $bio ?: null, $email ?: null, $phone ?: null, $linkedin ?: null, $sortOrder, $isActive]);
+        $stmt = $pdo->prepare("INSERT INTO executive_committee (name, designation, committee_type, image, bio, email, phone, linkedin, sort_order, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $designation, $committeeType, $image, $bio ?: null, $email ?: null, $phone ?: null, $linkedin ?: null, $sortOrder, $isActive]);
 
         setFlash('success', 'Committee member added successfully!');
         redirect(SITE_URL . '/admin/committee/index.php');
@@ -57,13 +58,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?= csrfField() ?>
 
                 <div class="row g-3 mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="form-label">Full Name *</label>
                         <input type="text" name="name" class="form-control" required value="<?= sanitize($_POST['name'] ?? '') ?>">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="form-label">Designation *</label>
                         <input type="text" name="designation" class="form-control" required value="<?= sanitize($_POST['designation'] ?? '') ?>" placeholder="e.g., President">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Committee Type *</label>
+                        <select name="committee_type" class="form-select" required>
+                            <option value="advisor" <?= ($_POST['committee_type'] ?? '') === 'advisor' ? 'selected' : '' ?>>Advisor</option>
+                            <option value="executive_member" <?= ($_POST['committee_type'] ?? 'executive_member') === 'executive_member' ? 'selected' : '' ?>>Executive Member</option>
+                            <option value="general_member" <?= ($_POST['committee_type'] ?? '') === 'general_member' ? 'selected' : '' ?>>General Member</option>
+                            <option value="life_member" <?= ($_POST['committee_type'] ?? '') === 'life_member' ? 'selected' : '' ?>>Life Member</option>
+                        </select>
                     </div>
                 </div>
 

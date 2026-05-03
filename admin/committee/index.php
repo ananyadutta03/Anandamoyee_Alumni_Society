@@ -33,6 +33,7 @@ $members = $pdo->query("SELECT * FROM executive_committee ORDER BY sort_order AS
                             <th>Photo</th>
                             <th>Name</th>
                             <th>Designation</th>
+                            <th>Type</th>
                             <th>Contact</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -51,6 +52,15 @@ $members = $pdo->query("SELECT * FROM executive_committee ORDER BY sort_order AS
                             </td>
                             <td><strong><?= sanitize($member['name']) ?></strong></td>
                             <td><?= sanitize($member['designation']) ?></td>
+                            <td>
+                                <?php
+                                    $typeLabels = ['advisor' => 'Advisor', 'executive_member' => 'Executive Member', 'general_member' => 'General Member', 'life_member' => 'Life Member'];
+                                    $typeColors = ['advisor' => 'bg-info', 'executive_member' => 'bg-primary', 'general_member' => 'bg-success', 'life_member' => 'bg-warning text-dark'];
+                                ?>
+                                <span class="badge <?= $typeColors[$member['committee_type']] ?? 'bg-secondary' ?>">
+                                    <?= $typeLabels[$member['committee_type']] ?? $member['committee_type'] ?>
+                                </span>
+                            </td>
                             <td>
                                 <?= $member['email'] ? sanitize($member['email']) : '-' ?><br>
                                 <small class="text-muted"><?= $member['phone'] ? sanitize($member['phone']) : '' ?></small>
@@ -71,7 +81,7 @@ $members = $pdo->query("SELECT * FROM executive_committee ORDER BY sort_order AS
                         </tr>
                         <?php endforeach; ?>
                         <?php if (empty($members)): ?>
-                        <tr><td colspan="7" class="text-center text-muted py-4">No committee members found</td></tr>
+                        <tr><td colspan="8" class="text-center text-muted py-4">No committee members found</td></tr>
                         <?php endif; ?>
                     </tbody>
                 </table>

@@ -63,8 +63,16 @@
                 <li class="nav-item">
                     <a class="nav-link <?= ($currentPage ?? '') === 'about' ? 'active' : '' ?>" href="<?= SITE_URL ?>/pages/about.php">About Us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link <?= ($currentPage ?? '') === 'committee' ? 'active' : '' ?>" href="<?= SITE_URL ?>/pages/committee.php">Executive Committee</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?= ($currentPage ?? '') === 'committee' ? 'active' : '' ?>" href="<?= SITE_URL ?>/pages/committee.php" id="committeeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Executive Committee</a>
+                    <ul class="dropdown-menu" aria-labelledby="committeeDropdown">
+                        <li><a class="dropdown-item" href="<?= SITE_URL ?>/pages/committee.php?type=advisor">Advisor</a></li>
+                        <li><a class="dropdown-item" href="<?= SITE_URL ?>/pages/committee.php?type=executive_member">Executive Member</a></li>
+                        <li><a class="dropdown-item" href="<?= SITE_URL ?>/pages/committee.php?type=general_member">General Member</a></li>
+                        <li><a class="dropdown-item" href="<?= SITE_URL ?>/pages/committee.php?type=life_member">Life Member</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="<?= SITE_URL ?>/pages/committee.php">View All</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= ($currentPage ?? '') === 'members' ? 'active' : '' ?>" href="<?= SITE_URL ?>/pages/members.php">Members</a>

@@ -14,9 +14,14 @@
             <i class="bi bi-person-circle"></i>
         <?php endif; ?>
         <h5><?= sanitize($_SESSION['user_name']) ?></h5>
+        <?php
+            $sbPlanBadge = ['general' => 'bg-secondary', 'executive' => 'bg-primary', 'lifetime' => 'bg-warning text-dark'];
+            $sbPlanLabel = ['general' => 'General Member', 'executive' => 'Executive Member', 'lifetime' => 'Lifetime Member'];
+            $sbPlan = $sidebarUser['membership_plan'] ?? 'general';
+        ?>
         <small>
-            <span class="badge <?= ($sidebarUser['membership_plan'] ?? 'free') === 'premium' ? 'bg-warning text-dark' : 'bg-secondary' ?>" style="font-size:0.65rem;">
-                <?= ucfirst($sidebarUser['membership_plan'] ?? 'free') ?> Member
+            <span class="badge <?= $sbPlanBadge[$sbPlan] ?? 'bg-secondary' ?>" style="font-size:0.65rem;">
+                <?= $sbPlanLabel[$sbPlan] ?? ucfirst($sbPlan) ?>
             </span>
         </small>
     </div>

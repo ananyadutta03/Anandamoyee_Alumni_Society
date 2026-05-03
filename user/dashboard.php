@@ -64,8 +64,13 @@ if (!$user) {
                         </div>
                         <h5 class="mb-1"><?= sanitize($user['name']) ?></h5>
                         <p class="text-muted small mb-2"><?= sanitize($user['email']) ?></p>
-                        <span class="badge <?= ($user['membership_plan'] ?? 'free') === 'premium' ? 'bg-warning text-dark' : 'bg-secondary' ?> mb-3">
-                            <i class="bi bi-star-fill me-1"></i><?= ucfirst($user['membership_plan'] ?? 'free') ?> Member
+                        <?php
+                            $planBadge = ['general' => 'bg-secondary', 'executive' => 'bg-primary', 'lifetime' => 'bg-warning text-dark'];
+                            $planLabel = ['general' => 'General Member', 'executive' => 'Executive Member', 'lifetime' => 'Lifetime Member'];
+                            $mp = $user['membership_plan'] ?? 'general';
+                        ?>
+                        <span class="badge <?= $planBadge[$mp] ?? 'bg-secondary' ?> mb-3">
+                            <i class="bi bi-star-fill me-1"></i><?= $planLabel[$mp] ?? ucfirst($mp) ?>
                         </span>
                         <a href="<?= SITE_URL ?>/user/profile.php" class="btn btn-sm btn-primary-custom">
                             <i class="bi bi-pencil me-1"></i> Edit Profile
@@ -103,18 +108,20 @@ if (!$user) {
                                 <div>
                                     <h6 class="mb-1"><i class="bi bi-star-fill me-2" style="color:var(--color-accent);"></i>Membership Plan</h6>
                                     <p class="text-muted small mb-0">
-                                        <?php if (($user['membership_plan'] ?? 'free') === 'premium'): ?>
-                                            Premium Member
+                                        <?php if ($mp === 'lifetime'): ?>
+                                            Lifetime Member &bull; Valid forever
+                                        <?php elseif ($mp === 'executive'): ?>
+                                            Executive Member
                                             <?php if ($user['plan_expires_at']): ?>
                                                 &bull; Expires: <?= formatDate($user['plan_expires_at']) ?>
                                             <?php endif; ?>
                                         <?php else: ?>
-                                            Free Member &bull; Upgrade to unlock premium features
+                                            General Member &bull; Upgrade to unlock more features
                                         <?php endif; ?>
                                     </p>
                                 </div>
                                 <a href="<?= SITE_URL ?>/user/membership.php" class="btn btn-sm btn-accent">
-                                    <?= ($user['membership_plan'] ?? 'free') === 'premium' ? 'Manage' : 'Upgrade' ?>
+                                    <?= $mp === 'general' ? 'Upgrade' : 'Manage' ?>
                                 </a>
                             </div>
                         </div>

@@ -1,12 +1,32 @@
 <?php
 require_once __DIR__ . '/../config/init.php';
 
-$pageTitle = 'Executive Committee - ' . SITE_NAME;
 $currentPage = 'committee';
 
+$committeeTypes = [
+    'advisor'          => 'Advisor',
+    'executive_member' => 'Executive Member',
+    'general_member'   => 'General Member',
+    'life_member'      => 'Life Member',
+];
+
+$selectedType = $_GET['type'] ?? '';
 $pdo = getDBConnection();
-$stmt = $pdo->query("SELECT * FROM executive_committee WHERE is_active = 1 ORDER BY sort_order ASC");
-$members = $stmt->fetchAll();
+
+if ($selectedType && array_key_exists($selectedType, $committeeTypes)) {
+    $pageTitle = $committeeTypes[$selectedType] . ' - Executive Committee - ' . SITE_NAME;
+    $stmt = $pdo->prepare("SELECT * FROM executive_committee WHERE is_active = 1 AND committee_type = ? ORDER BY sort_order ASC");
+    $stmt->execute([$selectedType]);
+    $members = $stmt->fetchAll();
+    $heading = $committeeTypes[$selectedType];
+    $subtitle = 'Members serving as ' . $committeeTypes[$selectedType];
+} else {
+    $pageTitle = 'Executive Committee - ' . SITE_NAME;
+    $members = $pdo->query("SELECT * FROM executive_committee WHERE is_active = 1 ORDER BY sort_order ASC")->fetchAll();
+    $heading = 'Our Leadership Team';
+    $subtitle = 'Meet the dedicated members leading Anandamoyee Alumni Association';
+    $selectedType = '';
+}
 
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
@@ -19,9 +39,30 @@ include __DIR__ . '/../includes/navbar.php';
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?= SITE_URL ?>/index.php">Home</a></li>
-                <li class="breadcrumb-item active">Executive Committee</li>
+                <?php if ($selectedType): ?>
+                    <li class="breadcrumb-item"><a href="<?= SITE_URL ?>/pages/committee.php">Executive Committee</a></li>
+                    <li class="breadcrumb-item active"><?= $committeeTypes[$selectedType] ?></li>
+                <?php else: ?>
+                    <li class="breadcrumb-item active">Executive Committee</li>
+                <?php endif; ?>
             </ol>
         </nav>
+    </div>
+</section>
+
+<!-- Category Tabs -->
+<section class="pt-4 pb-0">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+            <a href="<?= SITE_URL ?>/pages/committee.php" class="btn <?= $selectedType === '' ? 'btn-primary-custom' : 'btn-outline-primary-custom' ?> btn-sm px-3">
+                All
+            </a>
+            <?php foreach ($committeeTypes as $key => $label): ?>
+                <a href="<?= SITE_URL ?>/pages/committee.php?type=<?= $key ?>" class="btn <?= $selectedType === $key ? 'btn-primary-custom' : 'btn-outline-primary-custom' ?> btn-sm px-3">
+                    <?= $label ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
     </div>
 </section>
 
@@ -29,14 +70,15 @@ include __DIR__ . '/../includes/navbar.php';
 <section class="section-padding">
     <div class="container">
         <div class="section-title">
-            <h2>Our Leadership Team</h2>
-            <p>Meet the dedicated members leading Anandamoyee Alumni Association</p>
+            <h2><?= sanitize($heading) ?></h2>
+            <p><?= sanitize($subtitle) ?></p>
         </div>
 
         <?php if (empty($members)): ?>
             <div class="no-results">
                 <i class="bi bi-people"></i>
-                <h4>Committee information coming soon</h4>
+                <h4>No members found in this category</h4>
+                <p><a href="<?= SITE_URL ?>/pages/committee.php">View all committee members</a></p>
             </div>
         <?php else: ?>
             <div class="row g-4 justify-content-center">
@@ -52,6 +94,9 @@ include __DIR__ . '/../includes/navbar.php';
                         <?php endif; ?>
                         <h5><?= sanitize($member['name']) ?></h5>
                         <p class="designation"><?= sanitize($member['designation']) ?></p>
+                        <?php if (!$selectedType): ?>
+                            <span class="badge bg-secondary mb-2" style="font-size: 0.7rem;"><?= $committeeTypes[$member['committee_type']] ?? '' ?></span>
+                        <?php endif; ?>
                         <?php if ($member['bio']): ?>
                             <p class="text-muted small"><?= sanitize(truncateText($member['bio'], 100)) ?></p>
                         <?php endif; ?>
