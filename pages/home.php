@@ -132,12 +132,12 @@ $pdo = getDBConnection();
     </div>
 </section>
 
-<!-- Latest News Section -->
+<!-- Featured Alumni Biography Section -->
 <section class="section-padding">
     <div class="container">
         <div class="section-title">
-            <h2>Latest News</h2>
-            <p>Keep up with the latest news and updates from our community</p>
+            <h2>Featured Alumni</h2>
+            <p>Meet distinguished alumni of our community</p>
         </div>
 
         <div class="row g-4">
@@ -149,24 +149,21 @@ $pdo = getDBConnection();
             ?>
                 <div class="col-12">
                     <div class="no-results">
-                        <i class="bi bi-newspaper"></i>
-                        <h4>No news articles yet</h4>
-                        <p>Stay tuned for the latest updates!</p>
+                        <i class="bi bi-person-vcard"></i>
+                        <h4>No biographies available yet</h4>
+                        <p>Stay tuned for featured alumni profiles!</p>
                     </div>
                 </div>
             <?php else: ?>
                 <?php foreach ($newsItems as $news): ?>
                 <div class="col-md-6 col-lg-4">
-                    <div class="card card-custom">
+                    <div class="card card-custom h-100">
                         <div class="card-img-wrapper">
                             <?php if ($news['image']): ?>
                                 <img src="<?= UPLOAD_URL ?>news/<?= sanitize($news['image']) ?>" alt="<?= sanitize($news['title']) ?>">
                             <?php else: ?>
-                                <div class="placeholder-img w-100 h-100"><i class="bi bi-newspaper"></i></div>
+                                <div class="placeholder-img w-100 h-100"><i class="bi bi-person-circle"></i></div>
                             <?php endif; ?>
-                            <span class="date-badge">
-                                <i class="bi bi-clock me-1"></i> <?= formatDate($news['created_at']) ?>
-                            </span>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">
@@ -174,16 +171,19 @@ $pdo = getDBConnection();
                                     <?= sanitize($news['title']) ?>
                                 </a>
                             </h5>
+                            <?php if (!empty($news['designation'])): ?>
+                                <p class="text-muted small mb-2"><i class="bi bi-briefcase me-1"></i><?= sanitize($news['designation']) ?></p>
+                            <?php endif; ?>
                             <p class="card-text">
-                                <?= sanitize($news['excerpt'] ? truncateText($news['excerpt']) : truncateText($news['content'])) ?>
+                                <?= sanitize(truncateText(strip_tags($news['content']), 120)) ?>
                             </p>
                         </div>
                         <div class="card-footer-custom">
                             <span class="text-muted small">
-                                <i class="bi bi-person me-1"></i><?= sanitize($news['author'] ?? 'Admin') ?>
+                                <i class="bi bi-calendar3 me-1"></i><?= formatDate($news['created_at']) ?>
                             </span>
                             <a href="<?= SITE_URL ?>/pages/news_detail.php?slug=<?= sanitize($news['slug']) ?>" class="read-more">
-                                Read More <i class="bi bi-arrow-right"></i>
+                                Read Biography <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -194,7 +194,7 @@ $pdo = getDBConnection();
 
         <div class="text-center mt-5">
             <a href="<?= SITE_URL ?>/pages/news.php" class="btn btn-outline-primary-custom px-4">
-                View All News <i class="bi bi-arrow-right ms-1"></i>
+                View All Biographies <i class="bi bi-arrow-right ms-1"></i>
             </a>
         </div>
     </div>

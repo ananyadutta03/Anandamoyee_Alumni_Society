@@ -81,7 +81,7 @@
                     <a class="nav-link <?= ($currentPage ?? '') === 'events' ? 'active' : '' ?>" href="<?= SITE_URL ?>/pages/events.php">Events</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= ($currentPage ?? '') === 'news' ? 'active' : '' ?>" href="<?= SITE_URL ?>/pages/news.php">News</a>
+                    <a class="nav-link <?= ($currentPage ?? '') === 'news' ? 'active' : '' ?>" href="<?= SITE_URL ?>/pages/news.php">Alumni Biography</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= ($currentPage ?? '') === 'contact' ? 'active' : '' ?>" href="<?= SITE_URL ?>/pages/contact.php">Contact Us</a>

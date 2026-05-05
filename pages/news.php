@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/init.php';
 
-$pageTitle = 'News - ' . SITE_NAME;
+$pageTitle = 'Alumni Biography - ' . SITE_NAME;
 $currentPage = 'news';
 
 $pdo = getDBConnection();
@@ -24,39 +24,36 @@ include __DIR__ . '/../includes/navbar.php';
 <!-- Page Banner -->
 <section class="page-banner">
     <div class="container">
-        <h1>News</h1>
+        <h1>Alumni Biography</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?= SITE_URL ?>/index.php">Home</a></li>
-                <li class="breadcrumb-item active">News</li>
+                <li class="breadcrumb-item active">Alumni Biography</li>
             </ol>
         </nav>
     </div>
 </section>
 
-<!-- News Listing -->
+<!-- Biography Listing -->
 <section class="section-padding">
     <div class="container">
         <?php if (empty($newsItems)): ?>
             <div class="no-results">
-                <i class="bi bi-newspaper"></i>
-                <h4>No news articles found</h4>
-                <p>Stay tuned for the latest updates!</p>
+                <i class="bi bi-person-vcard"></i>
+                <h4>No biographies available yet</h4>
+                <p>Stay tuned for featured alumni profiles!</p>
             </div>
         <?php else: ?>
             <div class="row g-4">
                 <?php foreach ($newsItems as $news): ?>
                 <div class="col-md-6 col-lg-4">
-                    <div class="card card-custom">
+                    <div class="card card-custom h-100">
                         <div class="card-img-wrapper">
                             <?php if ($news['image']): ?>
                                 <img src="<?= UPLOAD_URL ?>news/<?= sanitize($news['image']) ?>" alt="<?= sanitize($news['title']) ?>">
                             <?php else: ?>
-                                <div class="placeholder-img w-100 h-100"><i class="bi bi-newspaper"></i></div>
+                                <div class="placeholder-img w-100 h-100"><i class="bi bi-person-circle"></i></div>
                             <?php endif; ?>
-                            <span class="date-badge">
-                                <i class="bi bi-clock me-1"></i> <?= formatDate($news['created_at']) ?>
-                            </span>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">
@@ -64,16 +61,19 @@ include __DIR__ . '/../includes/navbar.php';
                                     <?= sanitize($news['title']) ?>
                                 </a>
                             </h5>
+                            <?php if (!empty($news['designation'])): ?>
+                                <p class="text-muted small mb-2"><i class="bi bi-briefcase me-1"></i><?= sanitize($news['designation']) ?></p>
+                            <?php endif; ?>
                             <p class="card-text">
-                                <?= sanitize($news['excerpt'] ? truncateText($news['excerpt']) : truncateText($news['content'])) ?>
+                                <?= sanitize(truncateText(strip_tags($news['content']), 120)) ?>
                             </p>
                         </div>
                         <div class="card-footer-custom">
                             <span class="text-muted small">
-                                <i class="bi bi-person me-1"></i><?= sanitize($news['author'] ?? 'Admin') ?>
+                                <i class="bi bi-calendar3 me-1"></i><?= formatDate($news['created_at']) ?>
                             </span>
                             <a href="<?= SITE_URL ?>/pages/news_detail.php?slug=<?= sanitize($news['slug']) ?>" class="read-more">
-                                Read More <i class="bi bi-arrow-right"></i>
+                                Read Biography <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
                     </div>

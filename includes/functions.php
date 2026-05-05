@@ -16,6 +16,24 @@ function sanitize(string $input): string {
 }
 
 /**
+ * Allow limited safe HTML tags (for rich text bio content)
+ */
+function sanitizeHtml(string $input): string {
+    $allowed = '<strong><b><em><i><u><a><p><br><ul><ol><li><span>';
+    $clean   = strip_tags($input, $allowed);
+    // Force target=_blank and rel on links, coerce href scheme to http/https/mailto
+    $clean = preg_replace_callback('/<a\s+([^>]*)>/i', function ($m) {
+        if (preg_match('/href\s*=\s*"([^"]*)"/i', $m[1], $h)) {
+            $href = $h[1];
+            if (!preg_match('/^(https?:|mailto:)/i', $href)) $href = 'http://' . ltrim($href, '/');
+            return '<a href="' . htmlspecialchars($href, ENT_QUOTES) . '" target="_blank" rel="noopener">';
+        }
+        return '<a>';
+    }, $clean);
+    return $clean;
+}
+
+/**
  * Convert a string to URL-safe slug
  */
 function slugify(string $text): string {

@@ -35,7 +35,7 @@
                     <li><a href="<?= SITE_URL ?>/pages/about.php"><i class="bi bi-chevron-right"></i> About Us</a></li>
                     <li><a href="<?= SITE_URL ?>/pages/committee.php"><i class="bi bi-chevron-right"></i> Executive Committee</a></li>
                     <li><a href="<?= SITE_URL ?>/pages/events.php"><i class="bi bi-chevron-right"></i> Events</a></li>
-                    <li><a href="<?= SITE_URL ?>/pages/news.php"><i class="bi bi-chevron-right"></i> News</a></li>
+                    <li><a href="<?= SITE_URL ?>/pages/news.php"><i class="bi bi-chevron-right"></i> Alumni Biography</a></li>
                     <li><a href="<?= SITE_URL ?>/pages/contact.php"><i class="bi bi-chevron-right"></i> Contact Us</a></li>
                 </ul>
             </div>

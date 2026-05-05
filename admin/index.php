@@ -52,10 +52,10 @@ $recentEvents = $pdo->query("SELECT title, event_date, status FROM events ORDER 
             </div>
             <div class="col-sm-6 col-xl-3">
                 <div class="stat-card" style="border-left-color: #17a2b8;">
-                    <div class="stat-icon bg-info"><i class="bi bi-newspaper"></i></div>
+                    <div class="stat-icon bg-info"><i class="bi bi-person-vcard"></i></div>
                     <div class="stat-info">
                         <h3><?= $newsCount ?></h3>
-                        <p>News Articles</p>
+                        <p>Alumni Biographies</p>
                     </div>
                 </div>
             </div>

@@ -17,7 +17,7 @@
             <i class="bi bi-calendar-event"></i> Events
         </a>
         <a href="<?= SITE_URL ?>/admin/news/index.php" class="<?= ($adminPage ?? '') === 'news' ? 'active' : '' ?>">
-            <i class="bi bi-newspaper"></i> News
+            <i class="bi bi-person-vcard"></i> Alumni Biography
         </a>
 
         <div class="nav-label">People</div>

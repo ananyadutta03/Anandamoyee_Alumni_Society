@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Manage News - Admin';
+$pageTitle = 'Manage Alumni Biographies - Admin';
 $adminPage = 'news';
 
 include __DIR__ . '/../includes/admin_header.php';
@@ -11,7 +11,7 @@ $newsItems = $pdo->query("SELECT * FROM news ORDER BY created_at DESC")->fetchAl
 <div class="admin-content">
     <div class="admin-topbar">
         <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
-        <h4 class="page-title">Manage News</h4>
+        <h4 class="page-title">Alumni Biographies</h4>
         <div class="user-info">
             <span><i class="bi bi-person-circle me-1"></i> <?= sanitize($_SESSION['user_name']) ?></span>
         </div>
@@ -20,9 +20,9 @@ $newsItems = $pdo->query("SELECT * FROM news ORDER BY created_at DESC")->fetchAl
     <div class="admin-main">
         <div class="admin-table">
             <div class="table-header">
-                <h5><i class="bi bi-newspaper me-2"></i>All News (<?= count($newsItems) ?>)</h5>
+                <h5><i class="bi bi-person-vcard me-2"></i>All Biographies (<?= count($newsItems) ?>)</h5>
                 <a href="<?= SITE_URL ?>/admin/news/create.php" class="btn btn-sm btn-primary-custom">
-                    <i class="bi bi-plus-lg me-1"></i> Add News
+                    <i class="bi bi-plus-lg me-1"></i> Add Biography
                 </a>
             </div>
             <div class="table-responsive">
@@ -30,9 +30,10 @@ $newsItems = $pdo->query("SELECT * FROM news ORDER BY created_at DESC")->fetchAl
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Image</th>
-                            <th>Title</th>
-                            <th>Author</th>
+                            <th>Photo</th>
+                            <th>Alumni Name</th>
+                            <th>Designation</th>
+                            <th>URL Slug</th>
                             <th>Date</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -44,16 +45,20 @@ $newsItems = $pdo->query("SELECT * FROM news ORDER BY created_at DESC")->fetchAl
                             <td><?= $i + 1 ?></td>
                             <td>
                                 <?php if ($news['image']): ?>
-                                    <img src="<?= UPLOAD_URL ?>news/<?= sanitize($news['image']) ?>" alt="" class="img-preview" style="max-width:60px;max-height:40px;">
+                                    <img src="<?= UPLOAD_URL ?>news/<?= sanitize($news['image']) ?>" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
                                 <?php else: ?>
-                                    <span class="text-muted small">No image</span>
+                                    <div style="width:40px;height:40px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;"><i class="bi bi-person"></i></div>
                                 <?php endif; ?>
                             </td>
-                            <td><strong><?= sanitize(truncateText($news['title'], 50)) ?></strong></td>
-                            <td><?= sanitize($news['author'] ?? '-') ?></td>
+                            <td><strong><?= sanitize($news['title']) ?></strong></td>
+                            <td><?= sanitize($news['designation'] ?? '-') ?></td>
+                            <td><code class="small"><?= sanitize($news['slug']) ?></code></td>
                             <td><?= formatDate($news['created_at']) ?></td>
                             <td><span class="badge badge-<?= $news['status'] ?>"><?= ucfirst($news['status']) ?></span></td>
                             <td class="actions">
+                                <a href="<?= SITE_URL ?>/pages/news_detail.php?slug=<?= sanitize($news['slug']) ?>" target="_blank" class="btn btn-sm btn-outline-secondary" title="View">
+                                    <i class="bi bi-eye"></i>
+                                </a>
                                 <a href="<?= SITE_URL ?>/admin/news/edit.php?id=<?= $news['id'] ?>" class="btn btn-sm btn-outline-primary">
                                     <i class="bi bi-pencil"></i>
                                 </a>
@@ -66,7 +71,7 @@ $newsItems = $pdo->query("SELECT * FROM news ORDER BY created_at DESC")->fetchAl
                         </tr>
                         <?php endforeach; ?>
                         <?php if (empty($newsItems)): ?>
-                        <tr><td colspan="7" class="text-center text-muted py-4">No news articles found</td></tr>
+                        <tr><td colspan="8" class="text-center text-muted py-4">No biographies found</td></tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
