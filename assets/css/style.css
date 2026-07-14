@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
     text-decoration: none;
-    color: var(--color-primary-dark);
+   /* color: var(--color-primary-dark); */
     transition: var(--transition);
 }
 
@@ -187,7 +187,7 @@ img {
     color: var(--color-dark) !important;
     padding: 10px 12px !important;
     position: relative;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.3px;
 }
@@ -730,7 +730,7 @@ img {
 }
 
 .site-footer .footer-links li a:hover {
-    color: var(--color-primary);
+    font-weight: bold;
     padding-left: 5px;
 }
 
@@ -756,6 +756,18 @@ img {
 .site-footer .footer-contact .contact-item p {
     margin: 0;
     font-size: 0.9rem;
+    color: #dee2e6;
+}
+
+.footer-email {
+    color: rgba(255,255,255,0.7);
+    
+}
+
+.footer-email:hover {
+    font-weight: bold;
+    padding-left: 5px;
+    color: rgba(255,255,255,0.7);
 }
 
 .site-footer .footer-social a {
@@ -965,6 +977,9 @@ img {
 @media (max-width: 575.98px) {
     .hero-section h1 {
         font-size: 1.6rem;
+    }
+    .navbar-brand img{
+        font-size: 1.5rem;
     }
 
     .section-title h2 {
