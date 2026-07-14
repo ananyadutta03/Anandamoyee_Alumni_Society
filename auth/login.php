@@ -112,6 +112,10 @@ $pageTitle = 'Login - ' . SITE_NAME;
                 <p class="text-muted mb-0">Don't have an account?
                     <a href="<?= SITE_URL ?>/auth/register.php" style="color: var(--color-primary-dark); font-weight: 600;">Register Here</a>
                 </p>
+
+                <p class="text-muted mb-0">
+                    <a href="<?= SITE_URL ?>/" style="color: var(--color-primary-dark); font-weight: 600;">Forget Password ?</a>
+                </p>
                 <a href="<?= SITE_URL ?>/index.php" class="text-muted small mt-2 d-inline-block">
                     <i class="bi bi-arrow-left"></i> Back to Home
                 </a>
