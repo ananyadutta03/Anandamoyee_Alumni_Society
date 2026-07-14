@@ -11,7 +11,8 @@
 <!-- Footer -->
 <footer class="site-footer">
     <div class="container">
-        <div class="row">
+    <div class="row text-center text-lg-start">
+        
             <!-- About Column -->
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="footer-logo">
@@ -50,12 +51,15 @@
                     </div>
                     <div class="contact-item">
                         <i class="bi bi-envelope-fill"></i>
-                        <p>anandamoyeean@gmail.com</p>
+                        <p><a href="mailto:anandamoyeean@gmail.com" class="footer-email">
+                            anandamoyeean@gmail.com
+                            </a></p>
                     </div>
                     <div class="contact-item">
                         <i class="bi bi-telephone-fill"></i>
-                        <p>+880 1611 759094</p>
+                        <a href="tel:+8801611759094" class="footer-email">+880 1611 759094</a>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -64,7 +68,24 @@
     <!-- Footer Bottom -->
     <div class="footer-bottom">
         <div class="container">
-            <p>&copy; <?= date('Y') ?> <?= SITE_NAME ?>. All rights reserved.</p>
+            <p>&copy; <?= date('Y') ?> <?= SITE_NAME ?>. All rights reserved. <br>
+            Developed By -
+<a href="https://ananyadutta03.github.io/my_portfolio"
+   target="_blank"
+   style="color: rgba(167, 173, 237, 0.5); font-size: 0.90rem; text-decoration: none; transition: color 0.3s ease, text-shadow 0.3s ease;"
+   onmouseover="this.style.color='rgba(158, 165, 236, 1)'; this.style.textDecoration='underline'; this.style.textShadow='0 0 8px rgba(158, 165, 236, 0.6)';"
+   onmouseout="this.style.color='rgba(158, 165, 236, 0.5)'; this.style.textDecoration='none'; this.style.textShadow='none';">
+    Ananya Dutta
+</a>
+&
+<a href="https://swarupkst.com"
+   target="_blank"
+   style="color: rgba(167, 173, 237, 0.5); font-size: 0.90rem; text-decoration: none; transition: color 0.3s ease, text-shadow 0.3s ease;"
+   onmouseover="this.style.color='rgba(158, 165, 236, 1)'; this.style.textDecoration='underline'; this.style.textShadow='0 0 8px rgba(158, 165, 236, 0.6)';"
+   onmouseout="this.style.color='rgba(158, 165, 236, 0.5)'; this.style.textDecoration='none'; this.style.textShadow='none';">
+    Swarup Biswas
+</a>
+    </p>
         </div>
     </div>
 </footer>

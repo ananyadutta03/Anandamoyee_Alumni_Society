@@ -14,7 +14,7 @@
             <div class="auth-links ms-auto">
                 <?php if (isLoggedIn()): ?>
                     <span class="text-dark me-2">
-                        <i class="bi bi-person-circle"></i> <?= sanitize($_SESSION['user_name']) ?>
+                        <i class="bi bi-person-circle"></i> <?= sanitize($_SESSION['user_name'] ?? '') ?>
                     </span>
                     <?php if (isAdmin()): ?>
                         <a href="<?= SITE_URL ?>/admin/index.php" class="me-2">
@@ -45,7 +45,7 @@
 <nav class="navbar navbar-expand-lg main-navbar sticky-top">
     <div class="container">
         <!-- Logo -->
-        <a class="navbar-brand" href="<?= SITE_URL ?>/index.php">
+        <a class="navbar-brand" href="<?= SITE_URL ?>">
             <img src="<?= SITE_URL ?>/assets/images/logo.png" alt="<?= SITE_NAME ?>" onerror="this.outerHTML='<span class=\'fw-bold fs-4\' style=\'color: var(--color-primary-dark)\'><i class=\'bi bi-mortarboard-fill me-2\'></i><?= SITE_NAME ?></span>'">
         </a>
 
@@ -58,7 +58,7 @@
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?= ($currentPage ?? '') === 'home' ? 'active' : '' ?>" href="<?= SITE_URL ?>/index.php">Home</a>
+                    <a class="nav-link <?= ($currentPage ?? '') === 'home' ? 'active' : '' ?>" href="<?= SITE_URL ?>">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= ($currentPage ?? '') === 'about' ? 'active' : '' ?>" href="<?= SITE_URL ?>/pages/about.php">About Us</a>
