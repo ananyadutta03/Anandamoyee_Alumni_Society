@@ -41,18 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $mail = new PHPMailer(true);
 
-        // try {
-
-        //     $mail->isSMTP();
-        //     $mail->Host       = 'smtp.hostinger.com';
-        //     $mail->SMTPAuth   = true;
-        //     $mail->Username   = 'noreply@anandamoyeean.org';
-        //     $mail->Password   = '&G2u/ziK>';
-        //     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        //     $mail->Port = 587;
-            
-        //     $mail->SMTPDebug = 2;
-        //     $mail->Debugoutput = 'html';
             
             try {
     $mail->isSMTP();
@@ -127,7 +115,7 @@ echo "
         border-radius: 10px;
         box-shadow: 0 0 15px rgba(0,0,0,0.3);
     '>
-        <h3 style='color:green; margin-bottom:20px;'>✅ Success</h3>
+        <h3 style='color:green; margin-bottom:20px;'> Success</h3>
         <p style='margin-bottom:25px;'>
         Password reset link has been sent to your email.</p>
 
@@ -161,7 +149,7 @@ echo "
     box-shadow: 0 0 15px rgba(0,0,0,0.3);
     text-align: center;
 '>
-    <h3 style='color:red;'>❌ Error</h3>
+    <h3 style='color:red;'> Error</h3>
     <p>Mail could not be sent.</p>
     <a href='/'>
         <button>Back to Homepage</button>
