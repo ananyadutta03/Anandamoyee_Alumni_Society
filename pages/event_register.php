@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $transactionId = trim($_POST['transaction_id'] ?? '');
+    $wantsToSponsor = isset($_POST['wants_to_sponsor']) ? 1 : 0;
     $paymentProof  = null;
     $errors = [];
 
@@ -63,8 +64,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         try {
-            $insertStmt = $pdo->prepare("INSERT INTO event_registrations (event_id, user_id, payment_proof, transaction_id) VALUES (?, ?, ?, ?)");
-            $insertStmt->execute([$event['id'], $_SESSION['user_id'], $paymentProof, $transactionId ?: null]);
+            $insertStmt = $pdo->prepare("
+    INSERT INTO event_registrations
+    (
+        event_id,
+        user_id,
+        wants_to_sponsor,
+        payment_proof,
+        transaction_id
+    )
+    VALUES (?, ?, ?, ?, ?)
+");
+
+$insertStmt->execute([
+    $event['id'],
+    $_SESSION['user_id'],
+    $wantsToSponsor,
+    $paymentProof,
+    $transactionId ?: null
+]);
 
             setFlash('success', 'Registration submitted successfully! Please wait for admin approval.');
             redirect(SITE_URL . '/pages/event_detail.php?slug=' . $slug);
@@ -166,6 +184,8 @@ include __DIR__ . '/../includes/navbar.php';
                                 </div>
                             </div>
 
+                            
+
                             <hr class="my-4">
 
                             <!-- Payment Details -->
@@ -179,12 +199,39 @@ include __DIR__ . '/../includes/navbar.php';
                                 <label class="form-label">Payment Proof (Screenshot) *</label>
                                 <input type="file" name="payment_proof" class="form-control" accept="image/*" required id="imageInput">
                                 <small class="text-muted">Upload a screenshot of your payment. Allowed: jpg, png, gif, webp (max 5MB)</small>
-                                <img id="imagePreview" class="d-none mt-2" alt="Preview" style="max-width:300px;max-height:200px;border-radius:8px;">
+                                <img id="imagePreview" class="d-none mt-2" alt="Preview" style="max-width:300px;max-height:200px;border-radius:8px;"> <br>
+                                <div class="card border-0 shadow-sm mt-3">
+                            <div class="card-body">
+                                <div class="form-check d-flex align-items-start">
+                                    <input
+                                        class="form-check-input mt-1 me-3"
+                                        type="checkbox"
+                                        id="wantsToSponsor"
+                                        name="wants_to_sponsor"
+                                        value="1"
+                                        style="width: 20px; height: 20px; cursor: pointer;">
+
+                                    <label class="form-check-label" for="wantsToSponsor">
+                                        <span class="fw-bold text-primary">
+                                            🤝 I would like to sponsor this event
+                                        </span>
+                                        <br>
+                                        <small class="text-muted">
+                                            By selecting this option, our team will contact you with sponsorship opportunities and details.
+                                        </small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                             </div>
                             <?php else: ?>
                             <div class="alert alert-success mb-3">
                                 <i class="bi bi-check-circle me-1"></i> This is a free event. No payment required.
                             </div>
+
+                            
+
+                            
                             <?php endif; ?>
 
                             <button type="submit" class="btn btn-primary-custom w-100 py-2">
