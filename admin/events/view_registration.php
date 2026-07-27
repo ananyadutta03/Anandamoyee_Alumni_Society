@@ -109,6 +109,8 @@ if (!$reg) {
 
             <!-- Details -->
             <div class="col-lg-8">
+
+            
                 <!-- Event Info -->
                 <div class="card card-custom mb-3">
                     <div class="card-body p-4">
@@ -129,6 +131,33 @@ if (!$reg) {
                         </div>
                     </div>
                 </div>
+
+                <!-- Sponsor Information -->
+<div class="card card-custom mb-3">
+    <div class="card-body p-4">
+        <h6 class="mb-3">
+            <i class="bi bi-handshake me-2" style="color:var(--color-primary);"></i>
+            Sponsorship Request
+        </h6>
+
+        <?php if ($reg['wants_to_sponsor'] == 1): ?>
+            <div class="alert alert-success mb-0">
+                <i class="bi bi-check-circle me-2"></i>
+                <strong>This user wants to sponsor this event.</strong>
+                <br>
+                <small class="text-muted">
+                    Contact this user for sponsorship opportunities and details.
+                </small>
+            </div>
+        <?php else: ?>
+            <div class="alert alert-secondary mb-0">
+                <i class="bi bi-x-circle me-2"></i>
+                User did not request sponsorship.
+            </div>
+        <?php endif; ?>
+
+    </div>
+</div>
 
                 <!-- Payment Info -->
                 <div class="card card-custom mb-3">
