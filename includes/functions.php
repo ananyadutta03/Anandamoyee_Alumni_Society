@@ -11,8 +11,8 @@ function redirect(string $url): void {
 /**
  * Sanitize output to prevent XSS
  */
-function sanitize(string $input): string {
-    return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+function sanitize(?string $input): string {
+    return htmlspecialchars($input ?? '', ENT_QUOTES, 'UTF-8');
 }
 
 /**
@@ -47,7 +47,15 @@ function slugify(string $text): string {
  * Check if user is logged in
  */
 function isLoggedIn(): bool {
-    return isset($_SESSION['user_id']);
+    if (!isset($_SESSION['user_id'])) {
+        return false;
+    }
+    // Broken session: user_id exists but user_name is missing — clear only login keys
+    if (!isset($_SESSION['user_name'])) {
+        unset($_SESSION['user_id'], $_SESSION['user_email'], $_SESSION['user_role']);
+        return false;
+    }
+    return true;
 }
 
 /**

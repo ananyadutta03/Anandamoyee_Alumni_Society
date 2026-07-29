@@ -40,10 +40,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $hash = password_hash($password, PASSWORD_BCRYPT);
         $stmt = $pdo->prepare("INSERT INTO users (name, email, password, batch, phone) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$name, $email, $hash, $batch, $phone]);
+        $stmt->execute([
+    $name,
+    $email,
+    $hash,
+    $batch,
+    $phone
+]);
 
-        setFlash('success', 'Registration successful! Your account is pending admin approval.');
-        redirect(SITE_URL . '/auth/login.php');
+
+$user_id = $pdo->lastInsertId();
+
+
+// Send email to all admins
+
+require_once __DIR__ . '/../includes/email_helper.php';
+
+
+$adminStmt = $pdo->prepare("
+    SELECT email 
+    FROM users 
+    WHERE role='admin'
+    AND status='approved'
+");
+
+
+$adminStmt->execute();
+
+
+while($admin = $adminStmt->fetch())
+{
+
+
+$emailBody = "
+
+<h2>New User Registration</h2>
+
+<p>A new alumni member registered.</p>
+
+<table border='1' cellpadding='8'>
+
+<tr>
+<td>Name</td>
+<td>$name</td>
+</tr>
+
+
+<tr>
+<td>Email</td>
+<td>$email</td>
+</tr>
+
+
+<tr>
+<td>Batch</td>
+<td>$batch</td>
+</tr>
+
+
+<tr>
+<td>Phone</td>
+<td>$phone</td>
+</tr>
+
+
+</table>
+
+
+<p>Please login to admin panel and approve.</p>
+
+
+";
+
+
+sendEmail(
+    $admin['email'],
+    "New Alumni Registration",
+    $emailBody
+);
+
+
+}
+
+
+
+setFlash(
+'success',
+'Registration successful! Your account is pending admin approval.'
+);
+
+
+redirect(
+SITE_URL . '/auth/login.php'
+);
     } else {
         setFlash('danger', implode('<br>', $errors));
     }
