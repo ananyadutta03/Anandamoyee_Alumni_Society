@@ -11,9 +11,10 @@ if (!$id) {
     redirect(SITE_URL . '/admin/members/index.php');
 }
 
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ? AND role = 'user'");
+$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$id]);
 $member = $stmt->fetch();
+
 
 if (!$member) {
     setFlash('danger', 'Member not found.');
@@ -63,6 +64,8 @@ if (!$member) {
                         <input type="hidden" name="action" value="reject">
                         <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-lg me-1"></i>Reject</button>
                     </form>
+
+                    
                 <?php elseif ($member['status'] === 'approved'): ?>
                     <form method="POST" action="<?= SITE_URL ?>/admin/members/approve.php" class="d-inline">
                         <?= csrfField() ?>
@@ -78,6 +81,39 @@ if (!$member) {
                         <button type="submit" class="btn btn-sm btn-outline-success"><i class="bi bi-check-lg me-1"></i>Re-approve</button>
                     </form>
                 <?php endif; ?>
+
+
+                <?php if ($member['status'] === 'approved'): ?>
+
+                <?php if ($member['role'] === 'user'): ?>
+
+<form method="POST" action="<?= SITE_URL ?>/admin/members/change_role.php" class="d-inline">
+    <?= csrfField() ?>
+    <input type="hidden" name="id" value="<?= $member['id'] ?>">
+    <input type="hidden" name="role" value="admin">
+
+    <button class="btn btn-primary btn-sm">
+        <i class="bi bi-person-fill-gear me-1"></i>
+        Make Admin
+    </button>
+</form>
+
+<?php else: ?>
+
+<form method="POST" action="<?= SITE_URL ?>/admin/members/change_role.php" class="d-inline">
+    <?= csrfField() ?>
+    <input type="hidden" name="id" value="<?= $member['id'] ?>">
+    <input type="hidden" name="role" value="user">
+
+    <button class="btn btn-warning btn-sm">
+        <i class="bi bi-person-fill-dash me-1"></i>
+        Remove Admin
+    </button>
+</form>
+
+<?php endif; ?>
+
+<?php endif; ?>
             </div>
         </div>
 
