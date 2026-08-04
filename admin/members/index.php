@@ -6,7 +6,7 @@ include __DIR__ . '/../includes/admin_header.php';
 include __DIR__ . '/../includes/admin_sidebar.php';
 
 $filter = $_GET['filter'] ?? 'all';
-$sql = "SELECT * FROM users WHERE role = 'user'";
+$sql = "SELECT * FROM users WHERE role IN ('user','admin')";
 if ($filter === 'pending')  $sql .= " AND status = 'pending'";
 if ($filter === 'approved') $sql .= " AND status = 'approved'";
 if ($filter === 'rejected') $sql .= " AND status = 'rejected'";
@@ -68,6 +68,7 @@ $counts = [
                             <th>Email</th>
                             <th>Batch</th>
                             <th>Status</th>
+                            <th>Role</th>
                             <th>Joined</th>
                             <th>Actions</th>
                         </tr>
@@ -80,6 +81,13 @@ $counts = [
                             <td><?= sanitize($member['email']) ?></td>
                             <td><?= sanitize($member['batch'] ?? '-') ?></td>
                             <td><span class="badge badge-<?= $member['status'] ?>"><?= ucfirst($member['status']) ?></span></td>
+                            <td>
+    <?php if ($member['role'] === 'admin'): ?>
+        <span class="badge bg-danger">Admin</span>
+    <?php else: ?>
+        <span class="badge bg-primary">Member</span>
+    <?php endif; ?>
+</td>
                             <td><small><?= formatDate($member['created_at']) ?></small></td>
                             <td class="actions">
                                 <a href="<?= SITE_URL ?>/admin/members/view.php?id=<?= $member['id'] ?>" class="btn btn-sm btn-outline-primary-custom" title="View Details"><i class="bi bi-eye"></i></a>
