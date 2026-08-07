@@ -5,6 +5,17 @@ $adminPage = 'dashboard';
 include __DIR__ . '/includes/admin_header.php';
 include __DIR__ . '/includes/admin_sidebar.php';
 
+$currentAdmin = $pdo->prepare("
+    SELECT *
+    FROM users
+    WHERE id = ?
+");
+
+$currentAdmin->execute([
+    $_SESSION['user_id']
+]);
+
+$currentAdmin = $currentAdmin->fetch();
 // Dashboard stats
 $memberCount  = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'user'")->fetchColumn();
 $pendingCount = $pdo->query("SELECT COUNT(*) FROM users WHERE status = 'pending'")->fetchColumn();
@@ -25,11 +36,97 @@ $recentEvents = $pdo->query("SELECT title, event_date, status FROM events ORDER 
         <button class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-list"></i></button>
         <h4 class="page-title">Dashboard</h4>
         <div class="user-info">
-            <span><i class="bi bi-person-circle me-1"></i> <?= sanitize($_SESSION['user_name']) ?></span>
+            <span><i class="bi bi-person-circle me-1"></i> <?= sanitize($_SESSION['user_name'] ?? '') ?></span>
         </div>
     </div>
 
     <div class="admin-main">
+
+
+    <div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-body">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <div class="d-flex align-items-center">
+
+                    <img
+    src="<?= !empty($currentAdmin['profile_image'])
+        ? UPLOAD_URL . 'members/' . sanitize($currentAdmin['profile_image'])
+        : SITE_URL . '/assets/images/default-avatar.png'; ?>"
+    class="rounded-circle me-3"
+    width="80"
+    
+    style="width:120px;height:120px;border-radius:50%;object-fit:cover"
+>
+
+                    <div>
+
+                        <h4 class="mb-1">
+
+                            <?= sanitize($currentAdmin['name']) ?>
+
+                        </h4>
+
+                        <span class="badge bg-danger">
+
+                            Administrator
+
+                        </span>
+
+                        <div class="text-muted mt-2">
+
+                            <i class="bi bi-envelope"></i>
+
+                            <?= sanitize($currentAdmin['email']) ?>
+
+                        </div>
+
+                        <div class="text-muted">
+
+                            <i class="bi bi-telephone"></i>
+
+                            <?= sanitize($currentAdmin['phone'] ?? '-') ?>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+                <a href="<?= SITE_URL ?>/admin/profile/edit.php"
+                   class="btn btn-primary-custom me-2 mb-3">
+
+                    <i class="bi bi-pencil-square"></i>
+
+                    Edit Profile
+
+                </a>
+
+                <a href="<?= SITE_URL ?>/admin/profile/change_password.php"
+                   class="btn btn-outline-danger">
+
+                    <i class="bi bi-key"></i>
+
+                    Change Password
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
         <!-- Stats Cards -->
         <div class="row g-4 mb-4">
             <div class="col-sm-6 col-xl-3">
