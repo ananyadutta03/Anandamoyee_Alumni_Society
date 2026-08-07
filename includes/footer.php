@@ -42,9 +42,9 @@
             </div>
 
             <!-- Contact Column -->
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 col-md-6 mb-4 text-center">
                 <h5>Contact Info</h5>
-                <div class="footer-contact">
+                <div class="footer-contact text-center">
                     <div class="contact-item">
                         <i class="bi bi-geo-alt-fill"></i>
                         <p>Kheora, Kasba, Brahmanbaria-3460</p>

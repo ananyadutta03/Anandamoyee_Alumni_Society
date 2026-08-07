@@ -13,6 +13,240 @@ $pdo = getDBConnection();
     </div>
 </section>
 
+
+<!-- Notices Section -->
+<section class="section-padding notice-section">
+    <div class="container">
+
+        <!-- Section Header -->
+        <div class="section-header text-center mb-5">
+
+            <span class="section-subtitle">
+                <i class="bi bi-megaphone-fill me-1"></i>
+                Latest Updates
+            </span>
+
+            <h2 class="section-title">
+                Latest Notices
+            </h2>
+
+            <p class="section-description">
+                Stay updated with the latest announcements and important information.
+            </p>
+
+        </div>
+
+
+        <?php
+        $stmt = $pdo->query("
+            SELECT *
+            FROM notices
+            WHERE status = 'published'
+            ORDER BY created_at DESC
+            LIMIT 3
+        ");
+
+        $notices = $stmt->fetchAll();
+        ?>
+
+
+        <?php if (empty($notices)): ?>
+
+            <div class="no-results">
+
+                <i class="bi bi-megaphone"></i>
+
+                <h4>No notices available</h4>
+
+                <p>
+                    There are currently no published notices.
+                </p>
+
+            </div>
+
+        <?php else: ?>
+
+            <div class="row g-4">
+
+                <?php foreach ($notices as $notice): ?>
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card card-custom notice-card h-100">
+
+                            <!-- Notice Header -->
+                            <div class="notice-card-header">
+
+                                <div class="notice-icon">
+                                    <i class="bi bi-megaphone-fill"></i>
+                                </div>
+
+                                <span class="notice-date">
+                                    <i class="bi bi-calendar3 me-1"></i>
+                                    <?= formatDate($notice['created_at']) ?>
+                                </span>
+
+                            </div>
+
+
+                            <!-- Notice Content -->
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    <?= sanitize($notice['title']) ?>
+                                </h5>
+
+                                <p class="card-text">
+                                    <?= sanitize(
+                                        truncateText(
+                                            strip_tags($notice['content']),
+                                            150
+                                        )
+                                    ) ?>
+                                </p>
+
+                            </div>
+
+
+                            <!-- Footer -->
+                            <div class="card-footer-custom">
+
+                                <span class="text-muted small">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Announcement
+                                </span>
+
+                                <!-- Open Popup -->
+                                <button
+                                    type="button"
+                                    class="read-more notice-read-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#noticeModal<?= $notice['id'] ?>"
+                                >
+                                    Read More
+                                    <i class="bi bi-arrow-right"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Notice Modal -->
+                    <div
+                        class="modal fade notice-modal"
+                        id="noticeModal<?= $notice['id'] ?>"
+                        tabindex="-1"
+                        aria-hidden="true"
+                    >
+
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="modal-notice-icon">
+                                            <i class="bi bi-megaphone-fill"></i>
+                                        </div>
+
+                                        <div class="ms-3">
+
+                                            <h5 class="modal-title">
+                                                <?= sanitize($notice['title']) ?>
+                                            </h5>
+
+                                            <small class="text-muted">
+
+                                                <i class="bi bi-calendar3 me-1"></i>
+
+                                                <?= formatDate($notice['created_at']) ?>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Cross Button -->
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+
+                                </div>
+
+
+                                <!-- Modal Body -->
+                                <div class="modal-body">
+
+                                    <div class="notice-full-content">
+
+                                        <?= nl2br(
+                                            sanitize($notice['content'])
+                                        ) ?>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Modal Footer -->
+                                <div class="modal-footer">
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-primary-custom"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        <i class="bi bi-x-lg me-1"></i>
+                                        Close
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <?php endforeach; ?>
+
+            </div>
+
+
+            <!-- View All -->
+            <div class="text-center mt-5">
+
+                <button
+                    type="button"
+                    class="btn btn-outline-primary-custom px-4"
+                    onclick="document.querySelector('.notice-card .notice-read-btn')?.click();"
+                >
+                    Latest Notice
+                    <i class="bi bi-megaphone ms-1"></i>
+                </button>
+
+            </div>
+
+        <?php endif; ?>
+
+    </div>
+</section>
+
+
+<!-- About Preview Section -->
+
+
 <!-- About Preview Section -->
 <section class="about-section section-padding">
     <div class="container">
@@ -27,31 +261,8 @@ $pdo = getDBConnection();
                 <div class="about-content">
                     <h3>About Anandamoyee Alumni Association</h3>
                     <p>Honoring our roots, empowering future generations.</p>
-                    <p></p>
+                    
 
-                    <!-- <div class="about-features">
-                        <div class="feature-item">
-                            <i class="bi bi-people-fill"></i>
-                            <div>
-                                <strong>Networking</strong>
-                                <p class="mb-0">Connect with fellow Anandamoyee alumni across industries and batches.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <i class="bi bi-calendar-event-fill"></i>
-                            <div>
-                                <strong>Events</strong>
-                                <p class="mb-0">Regular gatherings, homecomings, and professional meetups.</p>
-                            </div>
-                        </div>
-                        <div class="feature-item">
-                            <i class="bi bi-heart-fill"></i>
-                            <div>
-                                <strong>Community Service</strong>
-                                <p class="mb-0">Making a positive impact through social service initiatives.</p>
-                            </div>
-                        </div>
-                    </div> -->
 
                     <a href="<?= SITE_URL ?>/pages/about.php" class="btn btn-primary-custom mt-4">
                         Read More <i class="bi bi-arrow-right ms-1"></i>

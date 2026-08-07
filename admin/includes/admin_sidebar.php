@@ -1,3 +1,21 @@
+<?php
+// Get unread message count
+$unreadCount = 0;
+
+try {
+    $stmt = $pdo->query("
+        SELECT COUNT(*) 
+        FROM messages 
+        WHERE status = 'unread'
+    ");
+
+    $unreadCount = (int) $stmt->fetchColumn();
+
+} catch (PDOException $e) {
+    $unreadCount = 0;
+}
+?>
+
 <!-- Admin Sidebar -->
 <aside class="admin-sidebar" id="adminSidebar">
     <div class="sidebar-header">
