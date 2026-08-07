@@ -99,27 +99,29 @@ $recentEvents = $pdo->query("SELECT title, event_date, status FROM events ORDER 
 
             </div>
 
-            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <div class="col-md-4 mt-4 mt-md-0">
+    <div class="dashboard-actions">
 
-                <a href="<?= SITE_URL ?>/admin/profile/edit.php"
-                   class="btn btn-primary-custom me-2 mb-3">
+        <a href="<?= SITE_URL ?>/admin/profile/edit.php"
+           class="btn action-btn btn-edit">
+            <i class="bi bi-pencil-square"></i>
+            <span>Edit Profile</span>
+        </a>
 
-                    <i class="bi bi-pencil-square"></i>
+        <a href="<?= SITE_URL ?>/admin/profile/change_password.php"
+           class="btn action-btn btn-password">
+            <i class="bi bi-shield-lock"></i>
+            <span>Change Password</span>
+        </a>
 
-                    Edit Profile
+        <a href="<?= SITE_URL ?>/admin/profile/add-notice.php"
+           class="btn action-btn btn-notice">
+            <i class="bi bi-megaphone"></i>
+            <span>Publish Notice</span>
+        </a>
 
-                </a>
-
-                <a href="<?= SITE_URL ?>/admin/profile/change_password.php"
-                   class="btn btn-outline-danger">
-
-                    <i class="bi bi-key"></i>
-
-                    Change Password
-
-                </a>
-
-            </div>
+    </div>
+</div>
 
         </div>
 
