@@ -16,235 +16,616 @@ $pdo = getDBConnection();
 
 <!-- Notices Section -->
 <section class="section-padding notice-section">
-    <div class="container">
 
-        <!-- Section Header -->
-        <div class="section-header text-center mb-5">
 
-            <span class="section-subtitle">
-                <i class="bi bi-megaphone-fill me-1"></i>
-                Latest Updates
-            </span>
+<div class="container">
 
-            <h2 class="section-title">
-                Latest Notices
-            </h2>
 
-            <p class="section-description">
-                Stay updated with the latest announcements and important information.
+    <!-- Section Header -->
+    <div class="section-header text-center mb-5">
+
+        <span class="section-subtitle">
+            <i class="bi bi-megaphone-fill me-1"></i>
+            Latest Updates
+        </span>
+
+        <h2 class="section-title">
+            Latest Notices
+        </h2>
+
+        <p class="section-description">
+            Stay updated with the latest announcements and important information.
+        </p>
+
+    </div>
+
+
+    <?php
+
+    $stmt = $pdo->query("
+        SELECT
+            id,
+            title,
+            content,
+            image,
+            status,
+            created_at
+        FROM notices
+        WHERE status = 'published'
+        ORDER BY created_at DESC
+        LIMIT 3
+    ");
+
+    $notices = $stmt->fetchAll();
+
+    ?>
+
+
+    <?php if (empty($notices)): ?>
+
+        <div class="no-results">
+
+            <i class="bi bi-megaphone"></i>
+
+            <h4>
+                No notices available
+            </h4>
+
+            <p>
+                There are currently no published notices.
             </p>
 
         </div>
 
 
-        <?php
-        $stmt = $pdo->query("
-            SELECT *
-            FROM notices
-            WHERE status = 'published'
-            ORDER BY created_at DESC
-            LIMIT 3
-        ");
-
-        $notices = $stmt->fetchAll();
-        ?>
+    <?php else: ?>
 
 
-        <?php if (empty($notices)): ?>
+        <div class="row g-4">
 
-            <div class="no-results">
 
-                <i class="bi bi-megaphone"></i>
+            <?php foreach ($notices as $notice): ?>
 
-                <h4>No notices available</h4>
 
-                <p>
-                    There are currently no published notices.
-                </p>
+                <div class="col-md-6 col-lg-4">
 
-            </div>
 
-        <?php else: ?>
+                    <div class="card card-custom notice-card h-100">
 
-            <div class="row g-4">
 
-                <?php foreach ($notices as $notice): ?>
+                        <!-- Notice Image -->
+                        <?php if (!empty($notice['image'])): ?>
 
-                    <div class="col-md-6 col-lg-4">
+                            <div class="notice-card-image">
 
-                        <div class="card card-custom notice-card h-100">
+                                <img
+                                    src="<?= SITE_URL . '/' . htmlspecialchars($notice['image']) ?>"
+                                    alt="<?= sanitize($notice['title']) ?>"
+                                    loading="lazy"
+                                >
 
-                            <!-- Notice Header -->
-                            <div class="notice-card-header">
+                            </div>
 
-                                <div class="notice-icon">
-                                    <i class="bi bi-megaphone-fill"></i>
+                        <?php endif; ?>
+
+
+                        <!-- Notice Header -->
+                        <div class="notice-card-header">
+
+                            <div class="notice-icon">
+
+                                <i class="bi bi-megaphone-fill"></i>
+
+                            </div>
+
+
+                            <span class="notice-date">
+
+                                <i class="bi bi-calendar3 me-1"></i>
+
+                                <?= formatDate($notice['created_at']) ?>
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- Notice Content -->
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+
+                                <?= sanitize($notice['title']) ?>
+
+                            </h5>
+
+
+                            <p class="card-text">
+
+                                <?= sanitize(
+                                    truncateText(
+                                        strip_tags($notice['content']),
+                                        150
+                                    )
+                                ) ?>
+
+                            </p>
+
+                        </div>
+
+
+                        <!-- Footer -->
+                        <div class="card-footer-custom">
+
+
+                            <span class="text-muted small">
+
+                                <i class="bi bi-info-circle me-1"></i>
+
+                                Announcement
+
+                            </span>
+
+
+                            <!-- Open Popup -->
+                            <button
+                                type="button"
+                                class="read-more notice-read-btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#noticeModal<?= (int) $notice['id'] ?>"
+                            >
+
+                                Read More
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- Notice Modal -->
+                <div
+                    class="modal fade notice-modal"
+                    id="noticeModal<?= (int) $notice['id'] ?>"
+                    tabindex="-1"
+                    aria-hidden="true"
+                >
+
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+                        <div class="modal-content">
+
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+
+
+                                <div class="d-flex align-items-center">
+
+                                    <div class="modal-notice-icon">
+
+                                        <i class="bi bi-megaphone-fill"></i>
+
+                                    </div>
+
+
+                                    <div class="ms-3">
+
+                                        <h5 class="modal-title">
+
+                                            <?= sanitize($notice['title']) ?>
+
+                                        </h5>
+
+
+                                        <small class="text-muted">
+
+                                            <i class="bi bi-calendar3 me-1"></i>
+
+                                            <?= formatDate($notice['created_at']) ?>
+
+                                        </small>
+
+                                    </div>
+
                                 </div>
 
-                                <span class="notice-date">
-                                    <i class="bi bi-calendar3 me-1"></i>
-                                    <?= formatDate($notice['created_at']) ?>
-                                </span>
 
-                            </div>
-
-
-                            <!-- Notice Content -->
-                            <div class="card-body">
-
-                                <h5 class="card-title">
-                                    <?= sanitize($notice['title']) ?>
-                                </h5>
-
-                                <p class="card-text">
-                                    <?= sanitize(
-                                        truncateText(
-                                            strip_tags($notice['content']),
-                                            150
-                                        )
-                                    ) ?>
-                                </p>
-
-                            </div>
-
-
-                            <!-- Footer -->
-                            <div class="card-footer-custom">
-
-                                <span class="text-muted small">
-                                    <i class="bi bi-info-circle me-1"></i>
-                                    Announcement
-                                </span>
-
-                                <!-- Open Popup -->
+                                <!-- Close Button -->
                                 <button
                                     type="button"
-                                    class="read-more notice-read-btn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#noticeModal<?= $notice['id'] ?>"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
+
+
+                            </div>
+
+
+                            <!-- Modal Body -->
+                            <div class="modal-body">
+
+
+                                <!-- Notice Image -->
+                                <?php if (!empty($notice['image'])): ?>
+
+                                    <div class="notice-modal-image mb-4">
+
+                                        <img
+                                            src="<?= SITE_URL . '/' . htmlspecialchars($notice['image']) ?>"
+                                            alt="<?= sanitize($notice['title']) ?>"
+                                        >
+
+                                    </div>
+
+                                <?php endif; ?>
+
+
+                                <!-- Notice Content -->
+                                <div class="notice-full-content">
+
+                                    <?= nl2br(
+                                        sanitize($notice['content'])
+                                    ) ?>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- Modal Footer -->
+                            <div class="modal-footer">
+
+
+                                <!-- Share Button -->
+                                <!-- Share Button -->
+<button
+    type="button"
+    class="btn btn-share-notice"
+    onclick="shareNotice(
+        <?= (int) $notice['id'] ?>,
+        <?= htmlspecialchars(
+            json_encode($notice['title']),
+            ENT_QUOTES,
+            'UTF-8'
+        ) ?>
+    )"
+>
+    <i class="bi bi-share-fill me-1"></i>
+    Share Notice
+</button>
+
+
+                                <!-- Close -->
+                                <button
+                                    type="button"
+                                    class="btn btn-primary-custom"
+                                    data-bs-dismiss="modal"
                                 >
-                                    Read More
-                                    <i class="bi bi-arrow-right"></i>
+
+                                    <i class="bi bi-x-lg me-1"></i>
+
+                                    Close
+
                                 </button>
 
+
                             </div>
+
 
                         </div>
 
                     </div>
 
-
-                    <!-- Notice Modal -->
-                    <div
-                        class="modal fade notice-modal"
-                        id="noticeModal<?= $notice['id'] ?>"
-                        tabindex="-1"
-                        aria-hidden="true"
-                    >
-
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-
-                            <div class="modal-content">
-
-                                <!-- Modal Header -->
-                                <div class="modal-header">
-
-                                    <div class="d-flex align-items-center">
-
-                                        <div class="modal-notice-icon">
-                                            <i class="bi bi-megaphone-fill"></i>
-                                        </div>
-
-                                        <div class="ms-3">
-
-                                            <h5 class="modal-title">
-                                                <?= sanitize($notice['title']) ?>
-                                            </h5>
-
-                                            <small class="text-muted">
-
-                                                <i class="bi bi-calendar3 me-1"></i>
-
-                                                <?= formatDate($notice['created_at']) ?>
-
-                                            </small>
-
-                                        </div>
-
-                                    </div>
+                </div>
 
 
-                                    <!-- Cross Button -->
-                                    <button
-                                        type="button"
-                                        class="btn-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                    ></button>
-
-                                </div>
+            <?php endforeach; ?>
 
 
-                                <!-- Modal Body -->
-                                <div class="modal-body">
-
-                                    <div class="notice-full-content">
-
-                                        <?= nl2br(
-                                            sanitize($notice['content'])
-                                        ) ?>
-
-                                    </div>
-
-                                </div>
+        </div>
 
 
-                                <!-- Modal Footer -->
-                                <div class="modal-footer">
 
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary-custom"
-                                        data-bs-dismiss="modal"
-                                    >
-                                        <i class="bi bi-x-lg me-1"></i>
-                                        Close
-                                    </button>
+        <!-- View Latest -->
+        <div class="text-center mt-5">
 
-                                </div>
+            <a
+    href="<?= SITE_URL ?>/pages/notices.php"
+    class="btn btn-outline-primary-custom px-4"
+>
+    View All Notices
+    <i class="bi bi-arrow-right ms-1"></i>
+</a>
 
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                <?php endforeach; ?>
-
-            </div>
+        </div>
 
 
-            <!-- View All -->
-            <div class="text-center mt-5">
+    <?php endif; ?>
 
-                <button
-                    type="button"
-                    class="btn btn-outline-primary-custom px-4"
-                    onclick="document.querySelector('.notice-card .notice-read-btn')?.click();"
-                >
-                    Latest Notice
-                    <i class="bi bi-megaphone ms-1"></i>
-                </button>
 
-            </div>
+</div>
 
-        <?php endif; ?>
 
-    </div>
 </section>
 
+<!--
+|--------------------------------------------------------------------------
+| Notice CSS
+|--------------------------------------------------------------------------
+-->
 
-<!-- About Preview Section -->
+<style>
+
+    /*
+    |--------------------------------------------------------------------------
+    | Notice Image
+    |--------------------------------------------------------------------------
+    */
+
+    .notice-card-image {
+        width: 100%;
+        height: 210px;
+        overflow: hidden;
+        background: #f8f9fa;
+    }
+
+
+    .notice-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Modal Image
+    |--------------------------------------------------------------------------
+    */
+
+    .notice-modal-image {
+        width: 100%;
+        max-height: 450px;
+        overflow: hidden;
+        border-radius: 12px;
+        background: #f8f9fa;
+    }
+
+
+    .notice-modal-image img {
+        width: 100%;
+        max-height: 450px;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Share Button
+    |--------------------------------------------------------------------------
+    */
+
+    .btn-share-notice {
+        border: 1px solid #0d6efd;
+        background: #ffffff;
+        color: #0d6efd;
+        border-radius: 8px;
+        font-weight: 500;
+        padding: 8px 16px;
+        transition: none;
+    }
+
+
+    .btn-share-notice:hover {
+        background: #0d6efd;
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mobile
+    |--------------------------------------------------------------------------
+    */
+
+    @media (max-width: 576px) {
+
+        .notice-card-image {
+            height: 180px;
+        }
+
+
+        .notice-modal-image,
+        .notice-modal-image img {
+            max-height: 300px;
+        }
+
+    }
+
+</style>
+
+<!--
+|--------------------------------------------------------------------------
+| Notice Share JavaScript
+|--------------------------------------------------------------------------
+-->
+
+<script>
+
+    async function shareNotice(noticeId, noticeTitle) {
+
+        /*
+         * Generate notice URL
+         */
+        const noticeUrl =
+            window.location.origin +
+            window.location.pathname +
+            '#notice-' +
+            noticeId;
+
+
+        /*
+         * Native Share API
+         */
+        if (navigator.share) {
+
+            try {
+
+                await navigator.share({
+
+                    title: noticeTitle,
+
+                    text:
+                        noticeTitle +
+                        '\n\nRead this notice from our Alumni Association.',
+
+                    url: noticeUrl
+
+                });
+
+            } catch (error) {
+
+                /*
+                 * User cancelled the share menu.
+                 * No action required.
+                 */
+
+                if (error.name !== 'AbortError') {
+
+                    console.error(
+                        'Share failed:',
+                        error
+                    );
+
+                }
+
+            }
+
+            return;
+        }
+
+
+        /*
+         * Fallback: Copy Link
+         */
+        try {
+
+            await navigator.clipboard.writeText(noticeUrl);
+
+            showNoticeShareMessage(
+                'Notice link copied to clipboard!'
+            );
+
+        } catch (error) {
+
+            /*
+             * Older browser fallback
+             */
+            const tempInput =
+                document.createElement('input');
+
+            tempInput.value = noticeUrl;
+
+            document.body.appendChild(tempInput);
+
+            tempInput.select();
+
+            document.execCommand('copy');
+
+            document.body.removeChild(tempInput);
+
+            showNoticeShareMessage(
+                'Notice link copied to clipboard!'
+            );
+
+        }
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Share Success Message
+    |--------------------------------------------------------------------------
+    */
+
+    function showNoticeShareMessage(message) {
+
+        const existing =
+            document.getElementById(
+                'noticeShareToast'
+            );
+
+        if (existing) {
+            existing.remove();
+        }
+
+
+        const toast =
+            document.createElement('div');
+
+        toast.id = 'noticeShareToast';
+
+        toast.innerHTML = `
+            <i class="bi bi-check-circle-fill me-2"></i>
+            ${message}
+        `;
+
+
+        toast.style.position = 'fixed';
+
+        toast.style.bottom = '25px';
+
+        toast.style.right = '25px';
+
+        toast.style.zIndex = '99999';
+
+        toast.style.background = '#198754';
+
+        toast.style.color = '#ffffff';
+
+        toast.style.padding = '12px 18px';
+
+        toast.style.borderRadius = '8px';
+
+        toast.style.fontSize = '14px';
+
+        toast.style.boxShadow =
+            '0 5px 20px rgba(0,0,0,0.15)';
+
+
+        document.body.appendChild(toast);
+
+
+        setTimeout(function () {
+
+            toast.remove();
+
+        }, 2500);
+
+    }
+
+</script>
+
+
+
+
 
 
 <!-- About Preview Section -->
@@ -410,3 +791,73 @@ $pdo = getDBConnection();
         </div>
     </div>
 </section>
+<script>
+async function shareNotice(noticeId, noticeTitle) {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create Notice URL
+    |--------------------------------------------------------------------------
+    */
+
+    const noticeUrl =
+        window.location.origin +
+        '<?= parse_url(SITE_URL, PHP_URL_PATH) ?>' +
+        '/pages/notices.php?notice=' +
+        noticeId;
+
+
+    const shareData = {
+        title: noticeTitle,
+        text: 'Check out this notice from Anandamoyee Alumni Association.',
+        url: noticeUrl
+    };
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Native Share
+    |--------------------------------------------------------------------------
+    */
+
+    if (navigator.share) {
+
+        try {
+
+            await navigator.share(shareData);
+
+        } catch (error) {
+
+            if (error.name !== 'AbortError') {
+                console.error('Share failed:', error);
+            }
+
+        }
+
+        return;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Desktop Fallback - Copy Link
+    |--------------------------------------------------------------------------
+    */
+
+    try {
+
+        await navigator.clipboard.writeText(noticeUrl);
+
+        alert('Notice link copied successfully!');
+
+    } catch (error) {
+
+        prompt(
+            'Copy this notice link:',
+            noticeUrl
+        );
+
+    }
+
+}
+</script>
