@@ -72,18 +72,18 @@
             Developed By -
 <a href="https://ananyadutta03.github.io/my_portfolio"
    target="_blank"
-   style="color: rgba(167, 173, 237, 0.5); font-size: 0.90rem; text-decoration: none; transition: color 0.3s ease, text-shadow 0.3s ease;"
-   onmouseover="this.style.color='rgba(158, 165, 236, 1)'; this.style.textDecoration='underline'; this.style.textShadow='0 0 8px rgba(158, 165, 236, 0.6)';"
-   onmouseout="this.style.color='rgba(158, 165, 236, 0.5)'; this.style.textDecoration='none'; this.style.textShadow='none';">
-    Ananya Dutta
+   style="color: rgba(214, 220, 221, 0.5); font-size: 0.90rem; text-decoration: none; transition: color 0.3s ease, text-shadow 0.3s ease;"
+   onmouseover="this.style.color='rgb(203, 220, 223)'; this.style.textDecoration='underline'; this.style.textShadow='0 0 8px rgba(158, 165, 236, 0.6)';"
+   onmouseout="this.style.color='rgba(202, 219, 215, 0.5)'; this.style.textDecoration='none'; this.style.textShadow='none';">
+    <strong> Ananya Dutta </strong>
 </a>
 &
 <a href="https://swarupkst.com"
    target="_blank"
-   style="color: rgba(167, 173, 237, 0.5); font-size: 0.90rem; text-decoration: none; transition: color 0.3s ease, text-shadow 0.3s ease;"
-   onmouseover="this.style.color='rgba(158, 165, 236, 1)'; this.style.textDecoration='underline'; this.style.textShadow='0 0 8px rgba(158, 165, 236, 0.6)';"
-   onmouseout="this.style.color='rgba(158, 165, 236, 0.5)'; this.style.textDecoration='none'; this.style.textShadow='none';">
-    Swarup Biswas
+   style="color: rgba(214, 220, 221, 0.5); font-size: 0.90rem; text-decoration: none; transition: color 0.3s ease, text-shadow 0.3s ease;"
+   onmouseover="this.style.color='rgb(203, 220, 223)'; this.style.textDecoration='underline'; this.style.textShadow='0 0 8px rgba(158, 165, 236, 0.6)';"
+   onmouseout="this.style.color='rgba(202, 219, 215, 0.5)'; this.style.textDecoration='none'; this.style.textShadow='none';">
+    <strong> Swarup Biswas </strong>
 </a>
     </p>
         </div>

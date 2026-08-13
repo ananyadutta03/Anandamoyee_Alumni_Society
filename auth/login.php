@@ -97,12 +97,33 @@ $pageTitle = 'Login - ' . SITE_NAME;
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Password</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
-                </div>
-            </div>
+    <label class="form-label">Password</label>
+
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="bi bi-lock"></i>
+        </span>
+
+        <input
+            type="password"
+            name="password"
+            id="loginPassword"
+            class="form-control"
+            placeholder="Enter your password"
+            required
+        >
+
+        <button
+            type="button"
+            class="btn btn-outline-secondary"
+            onclick="togglePassword('loginPassword', 'loginPasswordIcon')"
+            tabindex="-1"
+            aria-label="Show or hide password"
+        >
+            <i class="bi bi-eye" id="loginPasswordIcon"></i>
+        </button>
+    </div>
+</div>
 
             <button type="submit" class="btn btn-primary-custom w-100 py-2 mb-3">
                 <i class="bi bi-box-arrow-in-right me-1"></i> Login
@@ -130,6 +151,30 @@ $pageTitle = 'Login - ' . SITE_NAME;
     setTimeout(function() {
         document.querySelectorAll('.flash-message .alert').forEach(function(el) {
             el.classList.remove('show');
+            setTimeout(() => el.remove(), 300);
+        });
+    }, 5000);
+
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
+    }
+
+    // Auto dismiss flash messages
+    setTimeout(function() {
+        document.querySelectorAll('.flash-message .alert').forEach(function(el) {
+            el.classList.remove('show');
+
             setTimeout(() => el.remove(), 300);
         });
     }, 5000);

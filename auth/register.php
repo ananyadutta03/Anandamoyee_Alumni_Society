@@ -189,20 +189,59 @@ $pageTitle = 'Register - ' . SITE_NAME;
             </div>
 
             <div class="row g-3 mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Password *</label>
-                    <input type="password" name="password" class="form-control" required minlength="8" placeholder="Min 8 characters">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Confirm Password *</label>
-                    <input type="password" name="confirm_password" class="form-control" required>
-                </div>
-            </div>
+    <div class="col-md-6">
+        <label class="form-label">Password *</label>
+
+        <div class="input-group">
+            <input
+                type="password"
+                name="password"
+                id="password"
+                class="form-control"
+                required
+                minlength="8"
+                placeholder="Min 8 characters"
+            >
+
+            <button
+                type="button"
+                class="btn btn-outline-secondary"
+                onclick="togglePassword('password', 'passwordIcon')"
+                tabindex="-1"
+            >
+                <i class="bi bi-eye" id="passwordIcon"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Confirm Password *</label>
+
+        <div class="input-group">
+            <input
+                type="password"
+                name="confirm_password"
+                id="confirm_password"
+                class="form-control"
+                required
+            >
+
+            <button
+                type="button"
+                class="btn btn-outline-secondary"
+                onclick="togglePassword('confirm_password', 'confirmPasswordIcon')"
+                tabindex="-1"
+            >
+                <i class="bi bi-eye" id="confirmPasswordIcon"></i>
+            </button>
+        </div>
+    </div>
+</div>
 
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <label class="form-label">Batch *</label>
-                    <input type="text" name="batch" class="form-control" required placeholder="e.g., 45th" value="<?= sanitize($_POST['batch'] ?? '') ?>">
+                    <input type="text" name="batch" class="form-control" required placeholder="e.g., 2010" value="<?= sanitize($_POST['batch'] ?? '') ?>">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Phone *</label>
@@ -228,6 +267,28 @@ $pageTitle = 'Register - ' . SITE_NAME;
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    setTimeout(function() {
+        document.querySelectorAll('.flash-message .alert').forEach(function(el) {
+            el.classList.remove('show');
+            setTimeout(() => el.remove(), 300);
+        });
+    }, 5000);
+
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
+    }
+
     setTimeout(function() {
         document.querySelectorAll('.flash-message .alert').forEach(function(el) {
             el.classList.remove('show');
