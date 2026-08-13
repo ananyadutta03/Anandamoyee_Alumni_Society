@@ -89,31 +89,98 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <form method="POST" action="">
                             <?= csrfField() ?>
 
-                            <div class="mb-3">
-                                <label class="form-label">Current Password *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                    <input type="password" name="current_password" class="form-control" required placeholder="Enter current password">
-                                </div>
-                            </div>
+                        
+<div class="mb-3">
+    <label class="form-label">Current Password *</label>
 
-                            <hr>
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="bi bi-lock"></i>
+        </span>
 
-                            <div class="mb-3">
-                                <label class="form-label">New Password *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                                    <input type="password" name="new_password" class="form-control" required minlength="8" placeholder="Min 8 characters">
-                                </div>
-                            </div>
+        <input
+            type="password"
+            name="current_password"
+            id="currentPassword"
+            class="form-control"
+            required
+            placeholder="Enter current password"
+        >
 
-                            <div class="mb-4">
-                                <label class="form-label">Confirm New Password *</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                                    <input type="password" name="confirm_password" class="form-control" required placeholder="Re-enter new password">
-                                </div>
-                            </div>
+        <button
+            type="button"
+            class="btn btn-outline-secondary"
+            onclick="togglePassword('currentPassword', 'currentPasswordIcon')"
+            tabindex="-1"
+            aria-label="Show or hide current password"
+        >
+            <i class="bi bi-eye" id="currentPasswordIcon"></i>
+        </button>
+    </div>
+</div>
+
+<hr>
+
+<div class="mb-3">
+    <label class="form-label">New Password *</label>
+
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="bi bi-lock-fill"></i>
+        </span>
+
+        <input
+            type="password"
+            name="new_password"
+            id="newPassword"
+            class="form-control"
+            required
+            minlength="8"
+            placeholder="Min 8 characters"
+        >
+
+        <button
+            type="button"
+            class="btn btn-outline-secondary"
+            onclick="togglePassword('newPassword', 'newPasswordIcon')"
+            tabindex="-1"
+            aria-label="Show or hide new password"
+        >
+            <i class="bi bi-eye" id="newPasswordIcon"></i>
+        </button>
+    </div>
+</div>
+
+<div class="mb-4">
+    <label class="form-label">Confirm New Password *</label>
+
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="bi bi-lock-fill"></i>
+        </span>
+
+        <input
+            type="password"
+            name="confirm_password"
+            id="confirmPassword"
+            class="form-control"
+            required
+            placeholder="Re-enter new password"
+        >
+
+        <button
+            type="button"
+            class="btn btn-outline-secondary"
+            onclick="togglePassword('confirmPassword', 'confirmPasswordIcon')"
+            tabindex="-1"
+            aria-label="Show or hide confirm password"
+        >
+            <i class="bi bi-eye" id="confirmPasswordIcon"></i>
+        </button>
+    </div>
+</div>
+
+
 
                             <button type="submit" class="btn btn-primary-custom w-100 py-2">
                                 <i class="bi bi-check-lg me-1"></i> Update Password
@@ -138,5 +205,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<?= SITE_URL ?>/assets/js/admin.js"></script>
+
+<script>
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+
+        if (input.type === "password") {
+            input.type = "text";
+
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        } else {
+            input.type = "password";
+
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
+    }
+</script>
+
 </body>
 </html>

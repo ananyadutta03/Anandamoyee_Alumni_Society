@@ -1,6 +1,10 @@
 <?php
+
+
 $pageTitle = 'Dashboard - Admin';
 $adminPage = 'dashboard';
+
+
 
 include __DIR__ . '/includes/admin_header.php';
 include __DIR__ . '/includes/admin_sidebar.php';
@@ -246,4 +250,256 @@ $recentEvents = $pdo->query("SELECT title, event_date, status FROM events ORDER 
             </div>
         </div>
 
-<?php include __DIR__ . '/includes/admin_footer.php'; ?>
+<div> 
+
+<div class="footer-bottom">
+    <div class="container">
+        <p>
+            &copy; <?= date('Y') ?> <?= SITE_NAME ?>. All rights reserved.
+            <br>
+
+            Developed By -
+
+            <a
+                href="https://ananyadutta03.github.io/my_portfolio"
+                target="_blank"
+                
+            >
+                <strong> Ananya Dutta <strong>
+            </a>
+
+            &amp;
+
+            <a
+                href="https://swarupkst.com"
+                target="_blank"
+                
+            >
+                <strong> Swarup Biswas <strong>
+            </a>
+        </p>
+    </div>
+</div>
+
+<style>
+    /* =========================================================
+   Footer
+   ========================================================= */
+
+.site-footer {
+    background: #ffffff;
+    color: #495057;
+    border-top: 1px solid #e9ecef;
+    padding-top: 55px;
+    margin-top: 50px;
+}
+
+/* Footer headings */
+.site-footer h5 {
+    color: #212529;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    position: relative;
+}
+
+.site-footer h5::after {
+    content: "";
+    display: block;
+    width: 35px;
+    height: 3px;
+    background: #198754;
+    border-radius: 5px;
+    margin-top: 8px;
+}
+
+.site-footer p {
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Footer logo */
+.footer-logo img {
+    max-width: 75px;
+    height: auto;
+    margin-bottom: 12px;
+}
+
+/* =========================================================
+   Social Links
+   ========================================================= */
+
+.footer-social {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-social a {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f8f9fa;
+    color: #495057;
+
+    border: 1px solid #e9ecef;
+    border-radius: 50%;
+
+    text-decoration: none;
+
+    transition: all 0.25s ease;
+}
+
+.footer-social a:hover {
+    background: #198754;
+    color: #ffffff;
+    border-color: #198754;
+    transform: translateY(-3px);
+}
+
+/* =========================================================
+   Quick Links
+   ========================================================= */
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #6c757d;
+    font-size: 20px;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.footer-links a i {
+    font-size: 20px;
+    color: #198754;
+}
+
+.footer-links a:hover {
+    color: #198754;
+    padding-left: 4px;
+}
+
+/* =========================================================
+   Contact
+   ========================================================= */
+
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+}
+
+.contact-item > i {
+    color: #198754;
+    font-size: 16px;
+    margin-top: 3px;
+}
+
+.contact-item p {
+    margin: 0;
+}
+
+.footer-email {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.footer-email:hover {
+    color: #198754;
+}
+
+/* =========================================================
+   Footer Bottom
+   ========================================================= */
+
+.footer-bottom {
+    margin-top: 25px;
+    padding: 20px 0;
+
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+
+    text-align: center;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: #2a2a2b;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* Developer links */
+.footer-bottom a {
+    color: #222222 !important;
+    font-size: 13px !important;
+    text-decoration: none !important;
+
+    transition: all 0.25s ease;
+}
+
+.footer-bottom a:hover {
+    color: #198754 !important;
+    text-decoration: underline !important;
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 991px) {
+    .site-footer {
+        padding-top: 40px;
+    }
+
+    .site-footer h5::after {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 767px) {
+    .site-footer {
+        padding-top: 35px;
+    }
+
+    .footer-bottom {
+        padding: 18px 10px;
+    }
+
+    .footer-bottom p {
+        font-size: 12px;
+    }
+}
+</style>
