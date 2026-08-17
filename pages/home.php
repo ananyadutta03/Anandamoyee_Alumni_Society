@@ -634,13 +634,13 @@ $pdo = getDBConnection();
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
                 <div class="about-img">
-                    <img src="<?= SITE_URL ?>/assets/images/about-preview.jpg" alt="About Anandamoyee Alumni Society"
+                    <img src="<?= SITE_URL ?>/assets/images/about-preview.jpg" alt="About Anandamoyeean Alumni Society"
                          onerror="this.outerHTML='<div class=\'placeholder-img rounded\' style=\'height:400px\'><i class=\'bi bi-building\'></i></div>'">
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="about-content">
-                    <h3>About Anandamoyee Alumni Association</h3>
+                    <h3>About Anandamoyeean Alumni Association</h3>
                     <p>Honoring our roots, empowering future generations.</p>
                     
 

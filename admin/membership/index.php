@@ -14,9 +14,9 @@ $planLabels = ['general' => 'General Member', 'executive' => 'Executive Member',
 
 // Count per plan
 $counts = [];
-$counts['all'] = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'user' AND status = 'approved'")->fetchColumn();
+$counts['all'] = $pdo->query("SELECT COUNT(*) FROM users WHERE role IN ('user', 'admin') AND status = 'approved'")->fetchColumn();
 foreach ($planLabels as $slug => $label) {
-    $s = $pdo->prepare("SELECT COUNT(*) FROM users WHERE role = 'user' AND status = 'approved' AND membership_plan = ?");
+    $s = $pdo->prepare("SELECT COUNT(*) FROM users WHERE role IN ('user', 'admin') AND status = 'approved' AND membership_plan = ?");
     $s->execute([$slug]);
     $counts[$slug] = $s->fetchColumn();
 }
@@ -26,10 +26,10 @@ $pendingCount = $pdo->query("SELECT COUNT(*) FROM membership_payments WHERE stat
 
 // Get members
 if ($filter !== 'all' && array_key_exists($filter, $planLabels)) {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE role = 'user' AND status = 'approved' AND membership_plan = ? ORDER BY name ASC");
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE role IN ('user', 'admin') AND status = 'approved' AND membership_plan = ? ORDER BY name ASC");
     $stmt->execute([$filter]);
 } else {
-    $stmt = $pdo->query("SELECT * FROM users WHERE role = 'user' AND status = 'approved' ORDER BY membership_plan DESC, name ASC");
+    $stmt = $pdo->query("SELECT * FROM users WHERE role IN ('user', 'admin') AND status = 'approved' ORDER BY membership_plan DESC, name ASC");
     $filter = 'all';
 }
 $members = $stmt->fetchAll();
@@ -100,6 +100,7 @@ $members = $stmt->fetchAll();
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Batch</th>
                             <th>Plan</th>
                             <th>Expires</th>
@@ -111,6 +112,17 @@ $members = $stmt->fetchAll();
                         <tr>
                             <td><strong><?= sanitize($m['name']) ?></strong></td>
                             <td><?= sanitize($m['email']) ?></td>
+                            <td>
+    <?php if ($m['role'] === 'admin'): ?>
+        <span class="badge bg-danger">
+            <i class="bi bi-shield-check me-1"></i>Admin
+        </span>
+    <?php else: ?>
+        <span class="badge bg-secondary">
+            <i class="bi bi-person me-1"></i>User
+        </span>
+    <?php endif; ?>
+</td>
                             <td><?= sanitize($m['batch'] ?? '-') ?></td>
                             <td>
                                 <?php
@@ -143,7 +155,7 @@ $members = $stmt->fetchAll();
                         </tr>
                     <?php endforeach; ?>
                     <?php if (empty($members)): ?>
-                        <tr><td colspan="6" class="text-center text-muted py-4">No members found</td></tr>
+                        <tr><td colspan="7" class="text-center text-muted py-4">No members found</td></tr>
                     <?php endif; ?>
                     </tbody>
                 </table>
