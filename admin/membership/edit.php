@@ -6,7 +6,12 @@ include __DIR__ . '/../includes/admin_header.php';
 include __DIR__ . '/../includes/admin_sidebar.php';
 
 $id = intval($_GET['id'] ?? 0);
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ? AND role = 'user'");
+$stmt = $pdo->prepare("
+    SELECT * 
+    FROM users 
+    WHERE id = ? 
+    AND role IN ('user', 'admin')
+");
 $stmt->execute([$id]);
 $member = $stmt->fetch();
 
